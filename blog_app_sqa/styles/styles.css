@@ -45,7 +45,11 @@ nav {
 /* Main Content Styles */
 main {
   padding: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 /* Flash messages container */
 .flashes {
   display: block;
