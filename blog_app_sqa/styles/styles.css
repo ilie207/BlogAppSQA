@@ -45,9 +45,6 @@ nav {
 /* Main Content Styles */
 main {
   padding: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Flash messages container */
@@ -67,7 +64,7 @@ main {
   background-color: #777;
 }
 /* List styling */
-ul {
+.container-style {
   list-style: none;
   padding: 0;
   display: grid;
@@ -104,10 +101,7 @@ li:hover {
 /* Form Styles */
 form {
   margin-bottom: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: grid;
   grid-gap: 10px;
 }
@@ -120,7 +114,17 @@ textarea {
   border-radius: 3px;
   background-color: #f9f9f9;
   transition: border-color 0.3s ease;
+  max-width: 700px;
+  border-radius: 5px;
+  border-color: black;
+  border-width: 2px;
 }
+
+::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
 textarea {
   height: 10em;
   resize: vertical;
