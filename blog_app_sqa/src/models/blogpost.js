@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const BlogPost = sequelize.define(
     "BlogPost",
     {
@@ -10,21 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      author: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
     },
     {
-      tableName: "BlogPosts", // Explicitly define table name
-      timestamps: true, // Adds createdAt and updatedAt fields automatically
+      tableName: "BlogPosts",
+      timestamps: true,
     }
   );
-
-  // Define any associations (if applicable)
-  BlogPost.associate = (models) => {
-    // Example: BlogPost.hasMany(models.Comment);
-  };
-
   return BlogPost;
 };

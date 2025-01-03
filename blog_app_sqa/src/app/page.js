@@ -9,16 +9,15 @@ const HomePage = () => {
     fetch("/api/posts")
       .then((response) => response.json())
       .then((data) => {
-        // Ensure data is an array
-        const postsArray = Array.isArray(data) ? data : [];
-        setPosts(postsArray);
+        console.log("Received data:", data);
+        setPosts(Array.isArray(data) ? data : []);
       })
-      .catch((error) => console.error("Error fetching posts:", error));
+      .catch((error) => console.error("Error:", error));
   }, []);
 
   return (
     <div>
-      <main className="">
+      <main>
         <h1>Blog with Next JS</h1>
         <ul className="container-style">
           <Link href="/" className="button">
@@ -33,16 +32,15 @@ const HomePage = () => {
         </ul>
 
         <ul>
-          {posts.length > 0 ? (
-            posts.map((post) => (
-              <li key={post.id}>
-                <h2>{post.title}</h2>
-                <p>{post.content}</p>
-              </li>
-            ))
-          ) : (
-            <li>No posts available</li>
-          )}
+          {posts.map((post) => (
+            <li key={post.id}>
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+              <small>
+                Created: {new Date(post.createdAt).toLocaleDateString()}
+              </small>
+            </li>
+          ))}
         </ul>
       </main>
     </div>

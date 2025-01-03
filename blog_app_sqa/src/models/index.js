@@ -8,7 +8,7 @@ const sequelize = new Sequelize({
   password: process.env.DB_PASSWORD || "password",
   database: process.env.DB_NAME || "blog_app_development",
   port: process.env.DB_PORT || 5432,
-  logging: false,
+  logging: true,
 });
 
 const db = {
@@ -16,5 +16,11 @@ const db = {
   sequelize,
   Sequelize,
 };
+
+// Test the connection
+sequelize
+  .authenticate()
+  .then(() => console.log("Database connected!"))
+  .catch((err) => console.error("Connection error:", err));
 
 export default db;
