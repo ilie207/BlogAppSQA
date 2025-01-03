@@ -1,25 +1,52 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import React from "react";
 
-export default function Home() {
+const HomePage = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/posts")
+      .then((response) => response.json())
+      .then((data) => {
+        // Ensure data is an array
+        const postsArray = Array.isArray(data) ? data : [];
+        setPosts(postsArray);
+      })
+      .catch((error) => console.error("Error fetching posts:", error));
+  }, []);
+
   return (
     <div>
       <main className="">
         <h1>Blog with Next JS</h1>
         <ul className="container-style">
-          <button role="button" href="/">
+          <Link href="/" className="button">
             Home
-          </button>
-
-          <button type="button" href={"/createPost"}>
+          </Link>
+          <Link href="/createPost" className="button">
             Create Post
-          </button>
-
-          <button role="button" href="/stats">
+          </Link>
+          <Link href="/stats" className="button">
             Stats
-          </button>
+          </Link>
+        </ul>
+
+        <ul>
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <li key={post.id}>
+                <h2>{post.title}</h2>
+                <p>{post.content}</p>
+              </li>
+            ))
+          ) : (
+            <li>No posts available</li>
+          )}
         </ul>
       </main>
     </div>
   );
-}
+};
+
+export default HomePage;

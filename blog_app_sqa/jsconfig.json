@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@models/*": ["src/models/*"],
+      "@config/*": ["config/*"],
+      "@migrations/*": ["../migrations/*"],
+      "@seeders/*": ["../seeders/*"]
     }
   }
 }

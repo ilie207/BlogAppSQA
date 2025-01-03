@@ -1,5 +1,6 @@
 import React from "react";
 import CreatePost from "../components/CreatePost";
+import Link from "next/link";
 
 export default function CreatePostPage() {
   return (
@@ -7,17 +8,15 @@ export default function CreatePostPage() {
       <main className="">
         <h1>Blog with Next JS</h1>
         <ul className="container-style">
-          <button role="button" href="/">
+          <Link href="/" className="button">
             Home
-          </button>
-
-          <button type="button" href={"/createPost"}>
+          </Link>
+          <Link href="/createPost" className="button">
             Create Post
-          </button>
-
-          <button role="button" href="/stats">
+          </Link>
+          <Link href="/stats" className="button">
             Stats
-          </button>
+          </Link>
         </ul>
         <CreatePost />
       </main>
