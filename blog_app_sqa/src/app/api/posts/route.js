@@ -14,7 +14,6 @@ export async function GET() {
   }
 }
 
-// Add this POST handler alongside your existing GET handler
 export async function POST(request) {
   try {
     const body = await request.json();
