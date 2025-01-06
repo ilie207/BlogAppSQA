@@ -11,11 +11,11 @@ const Stats = () => {
         <NavBar />
         <h2>Post Statistics</h2>
         <ul>
-          <li>Average:</li>
-          <li>Median:</li>
-          <li>Maximum:</li>
-          <li>Minimum:</li>
-          <li>Total length of all posts:</li>
+          <li>Average Characters:</li>
+          <li>Median Characters:</li>
+          <li>Maximum Characters:</li>
+          <li>Minimum Characters:</li>
+          <li>Total characters length of all posts:</li>
         </ul>
       </main>
     </div>
