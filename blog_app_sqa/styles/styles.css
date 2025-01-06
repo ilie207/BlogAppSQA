@@ -146,6 +146,7 @@ textarea:focus {
   transition: background-color 0.3s ease;
   text-decoration: none;
   text-align: center;
+  max-width: 250px;
 }
 .custom_button:hover {
   background-color: #fd7e14;
