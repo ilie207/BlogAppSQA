@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --coverage"
+    "test":"jest --coverage"
   },
   "dependencies": {
     "mysql": "^2.18.1",
@@ -21,7 +21,6 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@prisma/client": "^6.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",
