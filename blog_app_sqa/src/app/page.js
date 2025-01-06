@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import NavBar from "./components/NavBar";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -19,17 +19,7 @@ const HomePage = () => {
     <div>
       <main>
         <h1>Blog with Next JS</h1>
-        <ul className="container-style">
-          <Link href="/" className="button">
-            Home
-          </Link>
-          <Link href="/createPost" className="button">
-            Create Post
-          </Link>
-          <Link href="/stats" className="button">
-            Stats
-          </Link>
-        </ul>
+        <NavBar />
 
         <ul>
           {posts.map((post) => (

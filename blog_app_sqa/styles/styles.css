@@ -20,6 +20,7 @@ header {
 nav {
   margin-bottom: 20px;
 }
+
 .navbar ul {
   list-style: none;
   padding: 0;
@@ -135,7 +136,7 @@ textarea:focus {
   outline: none;
   border-color: #007bff;
 }
-button {
+.custom_button {
   padding: 8px 15px;
   background-color: #007bff;
   border: none;
@@ -143,8 +144,10 @@ button {
   cursor: pointer;
   border-radius: 3px;
   transition: background-color 0.3s ease;
+  text-decoration: none;
+  text-align: center;
 }
-button:hover {
+.custom_button:hover {
   background-color: #fd7e14;
 }
 /* Post Styles */
@@ -152,16 +155,16 @@ p {
   margin-bottom: 10px;
 }
 /* Edit Styles */
-button[type="submit"] {
+.custom_button[type="submit"] {
   background-color: #28a745;
 }
-button[type="submit"]:hover {
+.custom_button[type="submit"]:hover {
   background-color: #218838;
 }
-button[type="submit"].danger {
+.custom_button[type="submit"].danger {
   background-color: #dc3545;
 }
-button[type="submit"].danger:hover {
+.custom_button[type="submit"].danger:hover {
   background-color: #a13b45;
 }
 /* Responsive Styles */
