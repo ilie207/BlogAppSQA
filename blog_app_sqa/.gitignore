@@ -14,7 +14,7 @@
 /coverage
 
 # general
-packaage-lock.json
+package-lock.json
 
 # next.js
 /.next/
