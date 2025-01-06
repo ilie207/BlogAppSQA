@@ -7,6 +7,7 @@ body {
 }
 h1 {
   margin-top: 0;
+  text-align: center;
 }
 /* Header Styles */
 header {
@@ -19,6 +20,7 @@ header {
 nav {
   margin-bottom: 20px;
 }
+
 .navbar ul {
   list-style: none;
   padding: 0;
@@ -45,6 +47,7 @@ nav {
 main {
   padding: 20px;
 }
+
 /* Flash messages container */
 .flashes {
   display: block;
@@ -62,7 +65,7 @@ main {
   background-color: #777;
 }
 /* List styling */
-ul {
+.container-style {
   list-style: none;
   padding: 0;
   display: grid;
@@ -76,6 +79,9 @@ li {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  text-align: center;
+  background-color: #3737aa;
+  color: white;
 }
 li:hover {
   transform: translateY(-5px);
@@ -96,10 +102,7 @@ li:hover {
 /* Form Styles */
 form {
   margin-bottom: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
   padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: grid;
   grid-gap: 10px;
 }
@@ -112,7 +115,17 @@ textarea {
   border-radius: 3px;
   background-color: #f9f9f9;
   transition: border-color 0.3s ease;
+  max-width: 700px;
+  border-radius: 5px;
+  border-color: black;
+  border-width: 2px;
 }
+
+::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
 textarea {
   height: 10em;
   resize: vertical;
@@ -123,7 +136,7 @@ textarea:focus {
   outline: none;
   border-color: #007bff;
 }
-button {
+.custom_button {
   padding: 8px 15px;
   background-color: #007bff;
   border: none;
@@ -131,8 +144,10 @@ button {
   cursor: pointer;
   border-radius: 3px;
   transition: background-color 0.3s ease;
+  text-decoration: none;
+  text-align: center;
 }
-button:hover {
+.custom_button:hover {
   background-color: #fd7e14;
 }
 /* Post Styles */
@@ -140,16 +155,16 @@ p {
   margin-bottom: 10px;
 }
 /* Edit Styles */
-button[type="submit"] {
+.custom_button[type="submit"] {
   background-color: #28a745;
 }
-button[type="submit"]:hover {
+.custom_button[type="submit"]:hover {
   background-color: #218838;
 }
-button[type="submit"].danger {
+.custom_button[type="submit"].danger {
   background-color: #dc3545;
 }
-button[type="submit"].danger:hover {
+.custom_button[type="submit"].danger:hover {
   background-color: #a13b45;
 }
 /* Responsive Styles */
@@ -162,4 +177,8 @@ button[type="submit"].danger:hover {
   form {
     margin-bottom: 10px;
   }
+}
+
+.align-centre {
+  align-items: center;
 }
