@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
+import Header from "./components/Header";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -17,10 +18,9 @@ const HomePage = () => {
 
   return (
     <div>
+      <Header />
       <main>
-        <h1>Blog with Next JS</h1>
         <NavBar />
-
         <ul>
           {posts.map((post) => (
             <li key={post.id}>

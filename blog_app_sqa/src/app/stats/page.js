@@ -1,25 +1,18 @@
 import React from "react";
 import NavBar from "../components/NavBar";
+import Stats from "../components/Stats";
+import Header from "../components/Header";
 
-const Stats = () => {
+const StatsPage = () => {
   return (
     <div>
+      <Header />
       <main>
-        <h1 className="text-right text-4xl sm:text-6xl font-bold">
-          Blog with Next JS
-        </h1>
         <NavBar />
-        <h2>Post Statistics</h2>
-        <ul>
-          <li>Average Characters:</li>
-          <li>Median Characters:</li>
-          <li>Maximum Characters:</li>
-          <li>Minimum Characters:</li>
-          <li>Total characters length of all posts:</li>
-        </ul>
+        <Stats />
       </main>
     </div>
   );
 };
 
-export default Stats;
+export default StatsPage;

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.bulkInsert("blog_posts", [
+    await queryInterface.bulkInsert("BlogPosts", [
       {
         title: "First Blog Post",
         content: "This is the content of the first blog post.",
@@ -21,6 +21,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.bulkDelete("blog_posts", null, {});
+    await queryInterface.bulkDelete("BlogPosts", null, {});
   },
 };
