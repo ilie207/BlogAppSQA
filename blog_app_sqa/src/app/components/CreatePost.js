@@ -7,6 +7,7 @@ function CreatePost() {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
+    author: "",
   });
 
   const handleSubmit = async (e) => {
@@ -39,6 +40,13 @@ function CreatePost() {
         placeholder="Content"
         value={formData.content}
         onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Author"
+        value={formData.author}
+        onChange={(e) => setFormData({ ...formData, author: e.target.value })}
         required
       />
       <button type="submit" className="custom_button">

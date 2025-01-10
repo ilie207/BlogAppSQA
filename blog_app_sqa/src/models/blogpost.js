@@ -10,10 +10,14 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      author: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "BlogPosts",
-      timestamps: true,
+      timestamps: true, // This ensures createdAt and updatedAt are handled
     }
   );
   return BlogPost;

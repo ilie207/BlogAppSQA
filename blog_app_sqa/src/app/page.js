@@ -26,6 +26,7 @@ const HomePage = () => {
             <li key={post.id}>
               <h2>{post.title}</h2>
               <p>{post.content}</p>
+              <small>Author: {post.author}</small>
               <small>
                 Created: {new Date(post.createdAt).toLocaleDateString()}
               </small>
