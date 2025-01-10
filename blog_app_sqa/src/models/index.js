@@ -3,11 +3,11 @@ import BlogPostModel from "./blogpost";
 
 const sequelize = new Sequelize({
   dialect: "postgres",
-  host: process.env.DB_HOST || "localhost",
-  username: process.env.DB_USER || "dilawar",
-  password: process.env.DB_PASSWORD || "password",
-  database: process.env.DB_NAME || "blog_app_development",
-  port: process.env.DB_PORT || 5432,
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
   logging: true,
 });
 
