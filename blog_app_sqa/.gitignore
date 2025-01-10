@@ -13,8 +13,7 @@
 # testing
 /coverage
 
-# general
-package-lock.json
+
 
 # next.js
 /.next/
