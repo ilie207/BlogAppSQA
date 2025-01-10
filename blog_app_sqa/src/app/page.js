@@ -33,7 +33,6 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
-        <h2>Testing CI/CD</h2>
       </main>
     </div>
   );
