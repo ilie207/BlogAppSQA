@@ -9,9 +9,9 @@ const Header = () => {
         <title>Blog with Next JS</title>
       </Head>
       <header>
-        <a className="title_styling" href="/">
+        <Link className="title_styling" href="/">
           Blog with Next JS
-        </a>
+        </Link>
       </header>
     </>
   );
