@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { useRouter } from "next/navigation";
-import CreatePost from "../../src/app/components/CreatePost";
+import CreatePost from "../../../src/app/components/CreatePost";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
@@ -44,7 +44,11 @@ describe("CreatePost Component", () => {
     expect(global.fetch).toHaveBeenCalledWith("/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: "Test Title", content: "Test Content" }),
+      body: JSON.stringify({
+        title: "Test Title",
+        content: "Test Content",
+        author: "",
+      }),
     });
     //expect(mockRouter.push).toHaveBeenCalledWith("/");
     expect(mockRouter.refresh).toHaveBeenCalled();
