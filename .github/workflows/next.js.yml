@@ -19,10 +19,12 @@ jobs:
         with:
           node-version: "20.11.1"
           cache: "npm"
+          cache-dependency-path: "blog_app_sqa/package-lock.json"
 
       - name: Install dependencies
         working-directory: ./blog_app_sqa
         run: npm ci
 
       - name: Run tests
+        working-directory: ./blog_app_sqa
         run: npm test
