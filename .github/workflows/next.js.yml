@@ -21,6 +21,7 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
+        working-directory: ./blog_app_sqa
         run: npm ci
 
       - name: Run tests
