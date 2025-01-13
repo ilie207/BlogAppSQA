@@ -23,7 +23,9 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./blog_app_sqa
-        run: npm ci
+        run: |
+        npm install @next/swc-linux-x64-gnu @next/swc-linux-x64-musl
+        npm ci
 
       - name: Run tests
         working-directory: ./blog_app_sqa
