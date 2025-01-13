@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Run Unit Tests and Lint
 
 on:
   push:
@@ -26,6 +26,10 @@ jobs:
         run: |
           npm install @next/swc-linux-x64-gnu @next/swc-linux-x64-musl
           npm ci
+
+      - name: Run ESLint
+        working-directory: ./blog_app_sqa
+        run: npm run lint
 
       - name: Run tests
         working-directory: ./blog_app_sqa
