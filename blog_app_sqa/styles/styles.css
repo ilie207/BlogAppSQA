@@ -1,3 +1,37 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.title_styling {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sign-out-wrapper {
+  margin-left: auto;
+}
+
+.sign-out {
+  color: white;
+  outline: none;
+  text-decoration: none;
+  transition: all 0.1s;
+  padding: 8px 15px;
+}
+
+.sign-out:hover {
+  background-color: grey;
+  border-radius: 4px;
+}
+
+.sign-out > span {
+  margin-right: 0.5em;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;

@@ -29,6 +29,6 @@ describe("Header Component", () => {
     const linkElement = screen.getByRole("link", {
       name: /blog with next js/i,
     });
-    expect(linkElement).toHaveAttribute("href", "/");
+    expect(linkElement).toHaveAttribute("href", "/dashboard");
   });
 });

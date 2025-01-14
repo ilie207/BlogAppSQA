@@ -1,41 +1,22 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import NavBar from "./components/NavBar";
-import Header from "./components/Header";
+import {
+  RegisterLink,
+  LoginLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 
-const HomePage = () => {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/posts")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Received data:", data);
-        setPosts(Array.isArray(data) ? data : []);
-      })
-      .catch((error) => console.error("Error:", error));
-  }, []);
-
+export default function Login() {
   return (
-    <div>
-      <Header />
+    <>
+      <div className="background">
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
       <main>
-        <NavBar />
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.content}</p>
-              <small>Author: {post.author}</small>
-              <small>
-                Created: {new Date(post.createdAt).toLocaleDateString()}
-              </small>
-            </li>
-          ))}
-        </ul>
+        <div className="login_container">
+          <h3>Welcome Blog App SQA</h3>
+          <LoginLink className="login_button">Login</LoginLink>
+          <RegisterLink className="login_button">Register</RegisterLink>
+        </div>
       </main>
-    </div>
+    </>
   );
-};
-
-export default HomePage;
+}

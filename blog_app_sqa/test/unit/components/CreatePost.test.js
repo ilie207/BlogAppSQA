@@ -50,7 +50,7 @@ describe("CreatePost Component", () => {
         author: "",
       }),
     });
-    //expect(mockRouter.push).toHaveBeenCalledWith("/");
+    //expect(mockRouter.push).toHaveBeenCalledWith("/dashboard");
     expect(mockRouter.refresh).toHaveBeenCalled();
   });
 });
