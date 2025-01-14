@@ -10,7 +10,7 @@ describe("NavBar Component", () => {
     const statsLink = screen.getByRole("link", { name: /stats/i });
 
     expect(homeLink).toBeInTheDocument();
-    expect(homeLink).toHaveAttribute("href", "/");
+    expect(homeLink).toHaveAttribute("href", "/dashboard");
 
     expect(createPostLink).toBeInTheDocument();
     expect(createPostLink).toHaveAttribute("href", "/createPost");

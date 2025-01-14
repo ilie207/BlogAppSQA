@@ -5,7 +5,7 @@ export default function NavBar() {
   return (
     <nav>
       <ul className="container-style">
-        <Link href="/" className="custom_button">
+        <Link href="/dashboard" className="custom_button">
           Home
         </Link>
         <Link href="/createPost" className="custom_button">
