@@ -1,25 +1,36 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 
 function CreatePost() {
   const router = useRouter();
+  const { user } = useKindeAuth();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     author: "",
+    user_id: user?.id || "",
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting form data:", formData);
 
     const response = await fetch("/api/posts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        ...formData,
+        user_id: user?.id,
+        author: user?.email,
+      }),
     });
+
+    const data = await response.json();
+    console.log("Response:", data);
 
     if (response.ok) {
       router.push("/dashboard");
