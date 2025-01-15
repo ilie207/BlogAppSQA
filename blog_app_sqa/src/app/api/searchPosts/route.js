@@ -28,83 +28,46 @@ export async function GET() {
     return NextResponse.json(result.rows);
 =======
     const { searchParams } = new URL(request.url);
-    const query = searchParams.get("query"); // Get 'query' parameter
-    const sort = searchParams.get("sort"); // Get 'sort' parameter
+    const query = searchParams.get("query");
+    const sort = searchParams.get("sort");
 
     let searchResults = [];
     let allPosts = [];
 
-    // Determine sorting order
-    let order = [["createdAt", "DESC"]]; // Default: Latest first
-    if (sort === "alphabet") {
-      order = [["title", "ASC"]]; // Sort by title alphabetically
-    }
+    // Build the ORDER BY clause based on sort parameter
+    const orderBy =
+      sort === "alphabet" ? "ORDER BY title ASC" : 'ORDER BY "createdAt" DESC';
 
     if (query) {
-      // Fetch posts that match the query
-      searchResults = await db.BlogPost.findAll({
-        where: {
-          [db.Sequelize.Op.or]: [
-            {
-              title: {
-                [db.Sequelize.Op.iLike]: `%${query}%`,
-              },
-            },
-            {
-              author: {
-                [db.Sequelize.Op.iLike]: `%${query}%`,
-              },
-            },
-          ],
-        },
-        attributes: [
-          "id",
-          "title",
-          "content",
-          "author",
-          "createdAt",
-          "updatedAt",
-        ],
-        order, // Apply sorting to search results
-      });
+      // Search query for matching posts
+      const searchQuery = `
+        SELECT * FROM "BlogPosts" 
+        WHERE title ILIKE $1 
+        OR author ILIKE $1 
+        ${orderBy}
+      `;
+      const searchResult = await pool.query(searchQuery, [`%${query}%`]);
+      searchResults = searchResult.rows;
 
-      // Fetch all posts excluding the search results
-      const excludedIds = searchResults.map((post) => post.id);
-      allPosts = await db.BlogPost.findAll({
-        where: {
-          id: {
-            [db.Sequelize.Op.notIn]: excludedIds,
-          },
-        },
-        attributes: [
-          "id",
-          "title",
-          "content",
-          "author",
-          "createdAt",
-          "updatedAt",
-        ],
-        order, // Apply sorting to remaining posts
-      });
+      // Get remaining posts
+      const remainingQuery = `
+        SELECT * FROM "BlogPosts" 
+        WHERE id NOT IN (
+          SELECT id FROM "BlogPosts" 
+          WHERE title ILIKE $1 
+          OR author ILIKE $1
+        )
+        ${orderBy}
+      `;
+      const remainingResult = await pool.query(remainingQuery, [`%${query}%`]);
+      allPosts = remainingResult.rows;
     } else {
-      // If no query, fetch all posts
-      allPosts = await db.BlogPost.findAll({
-        attributes: [
-          "id",
-          "title",
-          "content",
-          "author",
-          "createdAt",
-          "updatedAt",
-        ],
-        order, // Apply sorting to all posts
-      });
+      // If no search query, get all posts
+      const allPostsQuery = `SELECT * FROM "BlogPosts" ${orderBy}`;
+      const result = await pool.query(allPostsQuery);
+      allPosts = result.rows;
     }
 
-    console.log("Search results:", searchResults);
-    console.log("Remaining posts:", allPosts);
-
-    // Combine search results and remaining posts for the frontend
     return NextResponse.json({
       searchResults,
       allPosts,
