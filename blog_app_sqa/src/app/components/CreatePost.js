@@ -13,7 +13,7 @@ function CreatePost() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("/api/posts", {
+    const response = await fetch("/api/allPosts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

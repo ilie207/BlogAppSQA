@@ -11,7 +11,9 @@ export default function SearchComponent() {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/posts?query=${encodeURIComponent(searchQuery)}&sort=${sortOption}`
+        `/api/searchPosts?query=${encodeURIComponent(
+          searchQuery
+        )}&sort=${sortOption}`
       );
       if (!response.ok) throw new Error("Error fetching posts");
 
@@ -26,68 +28,72 @@ export default function SearchComponent() {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search by title or author"
-        className="search-input"
-      />
-      <select
-        value={sortOption}
-        onChange={(e) => setSortOption(e.target.value)}
-        className="sort-select"
-      >
-        <option value="latest">Sort by Latest</option>
-        <option value="alphabet">Sort by Alphabet</option>
-      </select>
-      <button
-        onClick={handleSearch}
-        disabled={loading}
-        className="search-button"
-      >
-        {loading ? "Searching..." : "Search"}
-      </button>
-
-      <div className="search-results">
-        <h2>Search Results</h2>
-        {searchResults.length > 0 ? (
-          <ul>
-            {searchResults.map((post) => (
-              <li key={post.id}>
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
-                <small>
-                  By {post.author} on{" "}
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </small>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No results found.</p>
-        )}
+    <div className="search-container">
+      <div className="search-bar">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by title or author"
+          className="search-input"
+        />
+        <select
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value)}
+          className="sort-select"
+        >
+          <option value="latest">Sort by Latest</option>
+          <option value="alphabet">Sort by Alphabet</option>
+        </select>
+        <button
+          onClick={handleSearch}
+          disabled={loading}
+          className="search-button"
+        >
+          {loading ? "Searching..." : "Search"}
+        </button>
       </div>
 
-      <div className="all-posts">
-        <h2>All Posts</h2>
-        {allPosts.length > 0 ? (
-          <ul>
-            {allPosts.map((post) => (
-              <li key={post.id}>
-                <h3>{post.title}</h3>
-                <p>{post.content}</p>
-                <small>
-                  By {post.author} on{" "}
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </small>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No posts available.</p>
-        )}
+      <div className="results-container">
+        <div className="search-results">
+          <h2>Search Results</h2>
+          {searchResults.length > 0 ? (
+            <ul>
+              {searchResults.map((post) => (
+                <li key={post.id}>
+                  <h3>{post.title}</h3>
+                  <p>{post.content}</p>
+                  <small>
+                    By {post.author} on{" "}
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No results found.</p>
+          )}
+        </div>
+
+        <div className="all-posts">
+          <h2>All Posts</h2>
+          {allPosts.length > 0 ? (
+            <ul>
+              {allPosts.map((post) => (
+                <li key={post.id}>
+                  <h3>{post.title}</h3>
+                  <p>{post.content}</p>
+                  <small>
+                    By {post.author} on{" "}
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </small>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No posts available.</p>
+          )}
+        </div>
       </div>
     </div>
   );
