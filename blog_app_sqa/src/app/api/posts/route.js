@@ -3,23 +3,32 @@ import db from "../../../models";
 
 export async function GET(request) {
   try {
-    const { searchParams } = new URL(request.url); // Parse query parameters
+    const { searchParams } = new URL(request.url);
     const query = searchParams.get("query"); // Get 'query' parameter
+    const sort = searchParams.get("sort"); // Get 'sort' parameter
 
-    let posts;
+    let searchResults = [];
+    let allPosts = [];
+
+    // Determine sorting order
+    let order = [["createdAt", "DESC"]]; // Default: Latest first
+    if (sort === "alphabet") {
+      order = [["title", "ASC"]]; // Sort by title alphabetically
+    }
 
     if (query) {
-      posts = await db.BlogPost.findAll({
+      // Fetch posts that match the query
+      searchResults = await db.BlogPost.findAll({
         where: {
           [db.Sequelize.Op.or]: [
             {
               title: {
-                [db.Sequelize.Op.iLike]: `%${query}%`, // Case-insensitive match for title
+                [db.Sequelize.Op.iLike]: `%${query}%`,
               },
             },
             {
               author: {
-                [db.Sequelize.Op.iLike]: `%${query}%`, // Case-insensitive match for author
+                [db.Sequelize.Op.iLike]: `%${query}%`,
               },
             },
           ],
@@ -32,10 +41,17 @@ export async function GET(request) {
           "createdAt",
           "updatedAt",
         ],
+        order, // Apply sorting to search results
       });
-    } else {
-      // Fetch all posts if no search query is provided
-      posts = await db.BlogPost.findAll({
+
+      // Fetch all posts excluding the search results
+      const excludedIds = searchResults.map((post) => post.id);
+      allPosts = await db.BlogPost.findAll({
+        where: {
+          id: {
+            [db.Sequelize.Op.notIn]: excludedIds,
+          },
+        },
         attributes: [
           "id",
           "title",
@@ -44,27 +60,33 @@ export async function GET(request) {
           "createdAt",
           "updatedAt",
         ],
+        order, // Apply sorting to remaining posts
+      });
+    } else {
+      // If no query, fetch all posts
+      allPosts = await db.BlogPost.findAll({
+        attributes: [
+          "id",
+          "title",
+          "content",
+          "author",
+          "createdAt",
+          "updatedAt",
+        ],
+        order, // Apply sorting to all posts
       });
     }
 
-    console.log("Posts fetched:", posts);
-    return NextResponse.json(posts);
+    console.log("Search results:", searchResults);
+    console.log("Remaining posts:", allPosts);
+
+    // Combine search results and remaining posts for the frontend
+    return NextResponse.json({
+      searchResults,
+      allPosts,
+    });
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-}
-
-export async function POST(request) {
-  try {
-    const body = await request.json();
-    const newPost = await db.BlogPost.create({
-      title: body.title,
-      content: body.content,
-      author: body.author,
-    });
-    return NextResponse.json(newPost, { status: 201 });
-  } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
