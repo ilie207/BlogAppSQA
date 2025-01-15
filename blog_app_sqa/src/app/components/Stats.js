@@ -14,7 +14,7 @@ const Stats = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/posts"); // Replace with the correct API route
+      const response = await fetch("/api/allPosts"); // Replace with the correct API route
       const posts = await response.json();
 
       if (response.ok && posts.length > 0) {
