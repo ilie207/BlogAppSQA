@@ -17,7 +17,7 @@ function CreatePost() {
     e.preventDefault();
     console.log("Submitting form data:", formData);
 
-    const response = await fetch("/api/posts", {
+    const response = await fetch("/api/allPosts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

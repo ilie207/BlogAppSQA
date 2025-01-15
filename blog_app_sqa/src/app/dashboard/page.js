@@ -7,7 +7,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("/api/posts")
+    fetch("/api/allPosts")
       .then((response) => response.json())
       .then((data) => {
         console.log("Received data:", data);
