@@ -41,7 +41,7 @@ describe("CreatePost Component", () => {
       screen.getByRole("button", { name: /create post/i })
     );
 
-    expect(global.fetch).toHaveBeenCalledWith("/api/posts", {
+    expect(global.fetch).toHaveBeenCalledWith("/api/allPosts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
