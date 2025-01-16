@@ -53,8 +53,8 @@ describe("CreatePost Component", () => {
         body: JSON.stringify({
           title: "Test Title",
           content: "Test Content",
-          author: "test@example.com",
-          user_id: "test-user-id",
+          author: "",
+          user_email: "test@example.com",
         }),
       });
       expect(mockRouter.push).toHaveBeenCalledWith("/dashboard");
