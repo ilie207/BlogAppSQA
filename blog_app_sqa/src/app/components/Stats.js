@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/NavBar";
 
 const Stats = () => {
   const [stats, setStats] = useState({
@@ -14,7 +13,7 @@ const Stats = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch("/api/allPosts"); // Replace with the correct API route
+      const response = await fetch("/api/allPosts");
       const posts = await response.json();
 
       if (response.ok && posts.length > 0) {

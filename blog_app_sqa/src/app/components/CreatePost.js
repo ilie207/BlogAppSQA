@@ -15,17 +15,16 @@ function CreatePost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData);
-
     const response = await fetch("/api/allPosts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...formData,
-        user_id: user?.id,
-        author: user?.email,
+        title: formData.title,
+        content: formData.content,
+        author: formData.author,
+        user_email: user?.email,
       }),
     });
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOption, setSortOption] = useState("latest"); // Default sort option
+  const [sortOption, setSortOption] = useState("latest");
   const [searchResults, setSearchResults] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -63,9 +63,9 @@ export default function SearchComponent() {
                 <li key={post.id}>
                   <h3>{post.title}</h3>
                   <p>{post.content}</p>
+                  <small>Author: {post.author}</small>
                   <small>
-                    By {post.author} on{" "}
-                    {new Date(post.createdAt).toLocaleDateString()}
+                    Created: {new Date(post.createdAt).toLocaleDateString()}
                   </small>
                 </li>
               ))}
@@ -83,9 +83,9 @@ export default function SearchComponent() {
                 <li key={post.id}>
                   <h3>{post.title}</h3>
                   <p>{post.content}</p>
+                  <small>Author: {post.author}</small>
                   <small>
-                    By {post.author} on{" "}
-                    {new Date(post.createdAt).toLocaleDateString()}
+                    Created: {new Date(post.createdAt).toLocaleDateString()}
                   </small>
                 </li>
               ))}

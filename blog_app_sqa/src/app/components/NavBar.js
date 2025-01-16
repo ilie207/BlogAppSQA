@@ -14,6 +14,9 @@ export default function NavBar() {
         <Link href="/stats" className="custom_button">
           Stats
         </Link>
+        <Link href="/allBlogPosts" className="custom_button">
+          All Posts
+        </Link>
       </ul>
     </nav>
   );
