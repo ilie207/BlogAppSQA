@@ -1,9 +1,14 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { useRouter } from "next/navigation";
+import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 import CreatePost from "../../../src/app/components/CreatePost";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
+}));
+
+jest.mock("@kinde-oss/kinde-auth-nextjs", () => ({
+  useKindeAuth: jest.fn(),
 }));
 
 describe("CreatePost Component", () => {
@@ -12,23 +17,23 @@ describe("CreatePost Component", () => {
     refresh: jest.fn(),
   };
 
+  const mockUser = {
+    id: "test-user-id",
+    email: "test@example.com",
+  };
+
   beforeEach(() => {
     useRouter.mockReturnValue(mockRouter);
-    global.fetch = jest.fn();
+    useKindeAuth.mockReturnValue({ user: mockUser });
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ success: true }),
+      })
+    );
   });
 
-  it("renders form inputs and submit button", () => {
-    render(<CreatePost />);
-
-    expect(screen.getByPlaceholderText("Title")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Content")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /create post/i })
-    ).toBeInTheDocument();
-  });
-
-  it("submits form data successfully", async () => {
-    global.fetch.mockResolvedValueOnce({ ok: true });
+  it("submits form data with user information", async () => {
     render(<CreatePost />);
 
     const titleInput = screen.getByPlaceholderText("Title");
@@ -41,16 +46,19 @@ describe("CreatePost Component", () => {
       screen.getByRole("button", { name: /create post/i })
     );
 
-    expect(global.fetch).toHaveBeenCalledWith("/api/allPosts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: "Test Title",
-        content: "Test Content",
-        author: "",
-      }),
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith("/api/allPosts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: "Test Title",
+          content: "Test Content",
+          author: "test@example.com",
+          user_id: "test-user-id",
+        }),
+      });
+      expect(mockRouter.push).toHaveBeenCalledWith("/dashboard");
+      expect(mockRouter.refresh).toHaveBeenCalled();
     });
-    //expect(mockRouter.push).toHaveBeenCalledWith("/dashboard");
-    expect(mockRouter.refresh).toHaveBeenCalled();
   });
 });
