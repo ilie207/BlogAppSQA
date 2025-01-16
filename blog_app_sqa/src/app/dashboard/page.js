@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
+import Search from "../components/Search";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -21,6 +22,8 @@ const HomePage = () => {
       <Header />
       <main>
         <NavBar />
+        <br />
+        <Search />
         <ul>
           {posts.map((post) => (
             <li key={post.id}>
