@@ -6,12 +6,12 @@ export async function POST(req) {
   try {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
-    const { title, content } = await req.json();
+    const { title, content, author } = await req.json();
     const now = new Date().toISOString();
 
     const result = await pool.query(
-      'INSERT INTO "BlogPosts" (title, content, user_id, author, "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [title, content, user.id, user.email, now, now]
+      'INSERT INTO "BlogPosts" (title, content, author, user_email, "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [title, content, author, user.email, now, now]
     );
 
     return NextResponse.json(result.rows[0]);

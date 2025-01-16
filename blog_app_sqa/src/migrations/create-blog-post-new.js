@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      user_id: {
+      user_email: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -35,7 +35,6 @@ module.exports = {
       },
     });
   },
-
   down: async (queryInterface) => {
     await queryInterface.dropTable("BlogPosts");
   },
