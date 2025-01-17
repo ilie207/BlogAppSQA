@@ -52,7 +52,6 @@ header {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Add these styles to your existing styles.css */
 body {
   background-color: #1c1b21;
 }
@@ -170,7 +169,7 @@ main {
   display: block;
   width: 80%;
   margin: auto auto 20px auto;
-  pointer-events: none; /* Disable the hover effect */
+  pointer-events: none;
 }
 /* Flash message */
 .flashes li {
@@ -221,7 +220,7 @@ li:hover {
 .post-content {
   flex-grow: 1;
   margin-bottom: 10px;
-  white-space: pre-wrap; /* Preserve line breaks */
+  white-space: pre-wrap;
 }
 /* Form Styles */
 form {
@@ -293,13 +292,12 @@ p {
 .custom_button[type="submit"].danger:hover {
   background-color: #a13b45;
 }
-/* Responsive Styles */
+
 @media (max-width: 768px) {
   /* Adjust styles for smaller screens */
   body {
     font-size: 14px;
   }
-  /* Example: Adjust the layout or styles of specific elements */
   form {
     margin-bottom: 10px;
   }
