@@ -58,7 +58,7 @@ export default function SearchComponent() {
         <div className="search-results">
           <h2>Search Results</h2>
           {searchResults.length > 0 ? (
-            <ul>
+            <ul data-testid="search-results">
               {searchResults.map((post) => (
                 <li key={post.id}>
                   <h3>{post.title}</h3>
@@ -78,7 +78,7 @@ export default function SearchComponent() {
         <div className="all-posts">
           <h2>All Posts</h2>
           {allPosts.length > 0 ? (
-            <ul>
+            <ul data-testid="all-posts">
               {allPosts.map((post) => (
                 <li key={post.id}>
                   <h3>{post.title}</h3>

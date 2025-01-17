@@ -17,7 +17,7 @@ export default (sequelize, DataTypes) => {
     },
     {
       tableName: "BlogPosts",
-      timestamps: true, // This ensures createdAt and updatedAt are handled
+      timestamps: true,
     }
   );
   return BlogPost;
