@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { getCurrentUser } from "../actions/actions";
+import { useRouter } from "next/navigation";
 
 export default function BlogPost({ post }) {
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     getCurrentUser().then((userData) => {
@@ -10,9 +12,26 @@ export default function BlogPost({ post }) {
     });
   }, []);
 
-  console.log("user email:", user?.email);
-  console.log("post email:", post.user_email);
   const isCreator = user?.email === post.user_email;
+
+  const handleDelete = async () => {
+    const response = await fetch(`/api/postManagement`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: post.id }),
+    });
+
+    if (response.ok) {
+      router.refresh();
+      window.location.reload();
+    }
+  };
+
+  const handleEdit = () => {
+    router.push(`/editPost?id=${post.id}`);
+  };
 
   return (
     <div>
@@ -27,8 +46,8 @@ export default function BlogPost({ post }) {
           </small>
           {isCreator && (
             <>
-              <button onClick={() => handleEdit(post.id)}>Edit</button>
-              <button onClick={() => handleDelete(post.id)}>Delete</button>
+              <button onClick={handleEdit}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
             </>
           )}
         </li>
