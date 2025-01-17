@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useId } from "react";
 
 export default function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -6,6 +6,7 @@ export default function SearchComponent() {
   const [searchResults, setSearchResults] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const uniqueKey = useId();
 
   const handleSearch = async () => {
     setLoading(true);
@@ -58,7 +59,7 @@ export default function SearchComponent() {
         <div className="search-results">
           <h2>Search Results</h2>
           {searchResults.length > 0 ? (
-            <ul data-testid="search-results">
+            <ul key={uniqueKey} data-testid="search-results">
               {searchResults.map((post) => (
                 <li key={post.id}>
                   <h3>{post.title}</h3>
@@ -78,7 +79,7 @@ export default function SearchComponent() {
         <div className="all-posts">
           <h2>All Posts</h2>
           {allPosts.length > 0 ? (
-            <ul data-testid="all-posts">
+            <ul key={uniqueKey} data-testid="all-posts">
               {allPosts.map((post) => (
                 <li key={post.id}>
                   <h3>{post.title}</h3>
