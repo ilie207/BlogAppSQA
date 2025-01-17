@@ -7,11 +7,11 @@ import {
 } from "@testing-library/react";
 import SearchComponent from "../../../src/app/components/Search";
 
-// Mocking the fetch call
 global.fetch = jest.fn(() =>
   Promise.resolve({
     ok: true,
     json: () =>
+      // Mock data
       Promise.resolve({
         searchResults: [
           {
@@ -37,7 +37,6 @@ global.fetch = jest.fn(() =>
 
 describe("SearchComponent", () => {
   beforeEach(() => {
-    // Clear the fetch mock before each test to avoid leakage
     fetch.mockClear();
   });
 
@@ -49,10 +48,8 @@ describe("SearchComponent", () => {
       screen.getByPlaceholderText(/Search by title or author/i)
     ).toBeInTheDocument();
 
-    // Use getByRole to find the button explicitly
     expect(screen.getByRole("button", { name: /Search/i })).toBeInTheDocument();
 
-    // Optionally check if the select element is present
     expect(screen.getByRole("combobox")).toBeInTheDocument();
   });
 
@@ -85,18 +82,14 @@ describe("SearchComponent", () => {
     const button = screen.getByRole("button", { name: /Search/i });
     fireEvent.click(button);
 
-    // Wait for the search result to appear in the document
     await waitFor(() => screen.getByText(/Test Post/i));
 
-    // Find the search results section and check if Test Post is displayed within it
     const searchResultsSection = within(screen.getByTestId("search-results"));
 
-    // Ensure the "Test Post" appears in the search results
     expect(searchResultsSection.getByText(/Test Post/i)).toBeInTheDocument();
     expect(searchResultsSection.getByText(/Jane Doe/i)).toBeInTheDocument();
     expect(searchResultsSection.getByText(/1\/1\/2025/i)).toBeInTheDocument();
 
-    // Optionally, check the all posts section to make sure it's also correctly displayed
     const allPostsSection = within(screen.getByTestId("all-posts"));
     expect(allPostsSection.getByText(/Another Post/i)).toBeInTheDocument();
   });
@@ -130,13 +123,11 @@ describe("SearchComponent", () => {
     const button = screen.getByRole("button");
     fireEvent.click(button);
 
-    // Wait for the results and check if "No results found" is displayed
     await waitFor(() => screen.getByText(/No results found./i));
     expect(screen.getByText(/No results found./i)).toBeInTheDocument();
   });
 
   test("displays 'No posts available' when no all posts are present", async () => {
-    // Mock the fetch to simulate no all posts
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
@@ -161,7 +152,6 @@ describe("SearchComponent", () => {
     const button = screen.getByRole("button");
     fireEvent.click(button);
 
-    // Wait for the results and check if "No posts available" is displayed
     await waitFor(() => screen.getByText(/No posts available./i));
     expect(screen.getByText(/No posts available./i)).toBeInTheDocument();
   });
