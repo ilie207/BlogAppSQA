@@ -1,8 +1,9 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
-import Search from "../components/Search";
+import BlogPost from "../components/BlogPost";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -11,8 +12,7 @@ const HomePage = () => {
     fetch("/api/allPosts")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Received data:", data);
-        setPosts(Array.isArray(data) ? data : []);
+        setPosts(data);
       })
       .catch((error) => console.error("Error:", error));
   }, []);
@@ -22,18 +22,9 @@ const HomePage = () => {
       <Header />
       <main>
         <NavBar />
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <h2>{post.title}</h2>
-              <p>{post.content}</p>
-              <small>Author: {post.author}</small>
-              <small>
-                Created: {new Date(post.createdAt).toLocaleDateString()}
-              </small>
-            </li>
-          ))}
-        </ul>
+        {posts.map((post) => (
+          <BlogPost key={post.id} post={post} />
+        ))}
       </main>
     </div>
   );

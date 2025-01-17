@@ -1,4 +1,5 @@
 "use client";
+
 import NavBar from "../components/NavBar";
 import Header from "../components/Header";
 import Search from "../components/Search";
