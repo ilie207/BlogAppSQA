@@ -17,7 +17,7 @@ const db = {
   Sequelize,
 };
 
-// Test the connection
+// Testing the connection
 sequelize
   .authenticate()
   .then(() => console.log("Database connected!"))
