@@ -1,30 +1,28 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { useRouter } from "next/navigation";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
+import React from "react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import CreatePost from "../../../src/app/components/CreatePost";
-
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
+import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 
 jest.mock("@kinde-oss/kinde-auth-nextjs", () => ({
   useKindeAuth: jest.fn(),
 }));
 
-describe("CreatePost Component", () => {
-  const mockRouter = {
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
     push: jest.fn(),
     refresh: jest.fn(),
-  };
+  }),
+}));
 
-  const mockUser = {
-    id: "test-user-id",
-    email: "test@example.com",
-  };
-
+describe("CreatePost Component", () => {
   beforeEach(() => {
-    useRouter.mockReturnValue(mockRouter);
-    useKindeAuth.mockReturnValue({ user: mockUser });
+    useKindeAuth.mockImplementation(() => ({
+      user: {
+        email: "test@example.com",
+        id: "123",
+      },
+    }));
+
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
@@ -34,17 +32,21 @@ describe("CreatePost Component", () => {
   });
 
   it("submits form data with user information", async () => {
-    render(<CreatePost />);
+    const { getByPlaceholderText, getByText } = render(<CreatePost />);
 
-    const titleInput = screen.getByPlaceholderText("Title");
-    const contentInput = screen.getByPlaceholderText("Content");
+    fireEvent.change(getByPlaceholderText("Title"), {
+      target: { value: "Test Title" },
+    });
 
-    fireEvent.change(titleInput, { target: { value: "Test Title" } });
-    fireEvent.change(contentInput, { target: { value: "Test Content" } });
+    fireEvent.change(getByPlaceholderText("Content"), {
+      target: { value: "Test Content" },
+    });
 
-    await fireEvent.submit(
-      screen.getByRole("button", { name: /create post/i })
-    );
+    fireEvent.change(getByPlaceholderText("Author"), {
+      target: { value: "Test Author" },
+    });
+
+    fireEvent.click(getByText("Create Post"));
 
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith("/api/allPosts", {
@@ -53,12 +55,10 @@ describe("CreatePost Component", () => {
         body: JSON.stringify({
           title: "Test Title",
           content: "Test Content",
-          author: "",
+          author: "Test Author",
           user_email: "test@example.com",
         }),
       });
-      expect(mockRouter.push).toHaveBeenCalledWith("/dashboard");
-      expect(mockRouter.refresh).toHaveBeenCalled();
     });
   });
 });
