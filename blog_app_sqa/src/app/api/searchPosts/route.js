@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
+import validator from "validator";
 
 export async function GET(request) {
   try {
@@ -7,25 +8,31 @@ export async function GET(request) {
     const query = searchParams.get("query");
     const sort = searchParams.get("sort");
 
+    // Validate and sanitize inputs
+    const sanitizedQuery = query ? validator.escape(query.trim()) : "";
+    const validSort = ["alphabet", "date"].includes(sort) ? sort : "date";
+
     let searchResults = [];
     let allPosts = [];
 
     const orderBy =
-      sort === "alphabet" ? "ORDER BY title ASC" : 'ORDER BY "createdAt" DESC';
+      validSort === "alphabet"
+        ? "ORDER BY title ASC"
+        : 'ORDER BY "createdAt" DESC';
 
-    if (query) {
-      // Search query for matching posts
+    if (sanitizedQuery) {
       const searchQuery = `
-      SELECT title, content, author, "createdAt"
-      FROM "BlogPosts" 
-      WHERE title ILIKE $1 
-      OR author ILIKE $1 
-      ${orderBy}
-    `;
-      const searchResult = await pool.query(searchQuery, [`%${query}%`]);
+        SELECT title, content, author, "createdAt"
+        FROM "BlogPosts" 
+        WHERE title ILIKE $1 
+        OR author ILIKE $1 
+        ${orderBy}
+      `;
+      const searchResult = await pool.query(searchQuery, [
+        `%${sanitizedQuery}%`,
+      ]);
       searchResults = searchResult.rows;
 
-      // Get remaining posts
       const remainingQuery = `
         SELECT * FROM "BlogPosts" 
         WHERE id NOT IN (
@@ -35,10 +42,11 @@ export async function GET(request) {
         )
         ${orderBy}
       `;
-      const remainingResult = await pool.query(remainingQuery, [`%${query}%`]);
+      const remainingResult = await pool.query(remainingQuery, [
+        `%${sanitizedQuery}%`,
+      ]);
       allPosts = remainingResult.rows;
     } else {
-      // If no search query, get all posts
       const allPostsQuery = `SELECT * FROM "BlogPosts" ${orderBy}`;
       const result = await pool.query(allPostsQuery);
       allPosts = result.rows;
@@ -49,7 +57,6 @@ export async function GET(request) {
       allPosts,
     });
   } catch (error) {
-    console.error("Database error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: "Search failed" }, { status: 500 });
   }
 }
