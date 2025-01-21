@@ -43,7 +43,7 @@ export default function EditPost() {
     });
 
     if (response.ok) {
-      router.push("/allBlogPosts");
+      router.push("/myBlogPosts");
     }
   };
 
