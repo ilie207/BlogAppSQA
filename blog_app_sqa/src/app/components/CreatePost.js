@@ -43,7 +43,7 @@ function CreatePost() {
 
     const sanitizedData = {
       title: validator.escape(formData.title.trim()),
-      content: validator.escape(formData.content.trim()),
+      content: validator.escape(formData.content.trim()).replace(/\n/g, "<br>"),
       author: validator.escape(formData.author.trim()),
       user_email: user?.email,
     };

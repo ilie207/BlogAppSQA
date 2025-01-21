@@ -33,32 +33,33 @@ export default function BlogPost({ post }) {
     router.push(`/editPost?id=${post.id}`);
   };
 
+  if (!isCreator) {
+    return null;
+  }
+
   return (
     <div>
       <ul>
         <li key={post.id}>
           <h2>{post.title}</h2>
-          <p>{post.content}</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: post.content
+                .replace(/\d\./g, "<br>$&")
+                .replace(/<br>/, ""),
+            }}
+            className="post-content"
+          />
           <small>Author: {post.author}</small>
+          <small>Email: {post.user_email}</small>
           <small>
             Created: {new Date(post.createdAt).toLocaleDateString()}
           </small>
-          <br />
           {isCreator && (
-            <div className="button-container">
-              <button
-                className="custom_button edit_button"
-                onClick={handleEdit}
-              >
-                Edit
-              </button>
-              <button
-                className="custom_button delete_button"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-            </div>
+            <>
+              <button onClick={handleEdit}>Edit</button>
+              <button onClick={handleDelete}>Delete</button>
+            </>
           )}
         </li>
       </ul>

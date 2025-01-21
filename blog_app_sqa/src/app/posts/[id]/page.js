@@ -50,7 +50,14 @@ export default function PostDetails() {
               Created: {new Date(post.createdAt).toLocaleDateString()}
             </small>
           </span>
-          <p>{post.content}</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: post.content
+                .replace(/\d\./g, "<br>$&")
+                .replace(/<br>/, ""),
+            }}
+            className="post-content"
+          />
         </div>
       </main>
     </div>
