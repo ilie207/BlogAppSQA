@@ -8,7 +8,7 @@ describe("NavBar Component", () => {
     const homeLink = screen.getByRole("link", { name: /home/i });
     const createPostLink = screen.getByRole("link", { name: /create post/i });
     const statsLink = screen.getByRole("link", { name: /stats/i });
-    const allPostsLink = screen.getByRole("link", { name: /all posts/i });
+    const allPostsLink = screen.getByRole("link", { name: /my posts/i });
 
     expect(homeLink).toBeInTheDocument();
     expect(homeLink).toHaveAttribute("href", "/dashboard");
@@ -20,7 +20,7 @@ describe("NavBar Component", () => {
     expect(statsLink).toHaveAttribute("href", "/stats");
 
     expect(allPostsLink).toBeInTheDocument();
-    expect(allPostsLink).toHaveAttribute("href", "/allBlogPosts");
+    expect(allPostsLink).toHaveAttribute("href", "/myBlogPosts");
   });
 
   it("applies correct CSS classes", () => {
