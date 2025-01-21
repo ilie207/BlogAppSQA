@@ -52,7 +52,7 @@ const Stats = () => {
   return (
     <div>
       <main>
-        <h2>Post Statistics</h2>
+        <h2 className="white-text">Post Statistics</h2>
         <ul>
           <li className="statistic_list">
             Average Characters: {stats.average}
