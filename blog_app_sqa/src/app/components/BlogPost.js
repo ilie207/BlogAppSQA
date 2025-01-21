@@ -51,15 +51,25 @@ export default function BlogPost({ post }) {
             className="post-content"
           />
           <small>Author: {post.author}</small>
-          <small>Email: {post.user_email}</small>
           <small>
             Created: {new Date(post.createdAt).toLocaleDateString()}
           </small>
+          <br />
           {isCreator && (
-            <>
-              <button onClick={handleEdit}>Edit</button>
-              <button onClick={handleDelete}>Delete</button>
-            </>
+            <div className="button-container">
+              <button
+                className="custom_button edit_button"
+                onClick={handleEdit}
+              >
+                Edit
+              </button>
+              <button
+                className="custom_button delete_button"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
           )}
         </li>
       </ul>
