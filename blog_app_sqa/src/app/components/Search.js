@@ -1,4 +1,5 @@
 import { useState, useId } from "react";
+import Link from "next/link";
 
 export default function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -62,8 +63,10 @@ export default function SearchComponent() {
             <ul key={uniqueKey} data-testid="search-results">
               {searchResults.map((post) => (
                 <li key={post.id}>
-                  <h3>{post.title}</h3>
-                  <p>{post.content}</p>
+                  <Link href={`/posts/[id]?id=${post.id}`}>
+                    <h3>{post.title}</h3>
+                  </Link>
+
                   <small>Author: {post.author}</small>
                   <small>
                     Created: {new Date(post.createdAt).toLocaleDateString()}
@@ -82,8 +85,10 @@ export default function SearchComponent() {
             <ul key={uniqueKey} data-testid="all-posts">
               {allPosts.map((post) => (
                 <li key={post.id}>
-                  <h3>{post.title}</h3>
-                  <p>{post.content}</p>
+                  <Link href={`/posts/[id]?id=${post.id}`}>
+                    <h3>{post.title}</h3>
+                  </Link>
+
                   <small>Author: {post.author}</small>
                   <small>
                     Created: {new Date(post.createdAt).toLocaleDateString()}
