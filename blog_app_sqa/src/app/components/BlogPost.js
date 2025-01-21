@@ -42,7 +42,14 @@ export default function BlogPost({ post }) {
       <ul>
         <li key={post.id}>
           <h2>{post.title}</h2>
-          <p>{post.content}</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: post.content
+                .replace(/\d\./g, "<br>$&")
+                .replace(/<br>/, ""),
+            }}
+            className="post-content"
+          />
           <small>Author: {post.author}</small>
           <small>Email: {post.user_email}</small>
           <small>
