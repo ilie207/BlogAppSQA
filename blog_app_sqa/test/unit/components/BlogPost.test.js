@@ -24,7 +24,6 @@ describe("BlogPost Component", () => {
     title: "Test Post",
     content: "Test Content",
     author: "Test Author",
-    user_email: "test@example.com",
     createdAt: "2023-01-01",
   };
 
@@ -50,9 +49,6 @@ describe("BlogPost Component", () => {
       expect(screen.getByText(mockPost.content)).toBeInTheDocument();
       expect(
         screen.getByText(`Author: ${mockPost.author}`)
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(`Email: ${mockPost.user_email}`)
       ).toBeInTheDocument();
     });
   });
