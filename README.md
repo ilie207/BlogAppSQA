@@ -27,7 +27,7 @@ Within our SQA app we have developed the following features:
 
 - **Unit and integration testing** - To implement the unit and integration tests we had used jest testing tool. We had used this tool as it is compatible and easy to use with javascript framework like next.js. Jest also includes a test runner, mocking capabilities, this eliminates the need for multiple configurations and librarys. Jest is also well-suited for integration testing and provides excellent choice for testing how components and modules worked together. With the use of this tool we were able to thoroughly test the functionality of our app.
 - **Test coverage report**
-  (images/SQA_unit_test_coverage.png)
+  ![screenshot](images/SQA_unit_test_coverage.png)
 
 ## Challenging and Solutions
 
