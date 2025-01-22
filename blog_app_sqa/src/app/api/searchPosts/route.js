@@ -22,12 +22,13 @@ export async function GET(request) {
 
     if (sanitizedQuery) {
       const searchQuery = `
-        SELECT title, content, author, "createdAt"
-        FROM "BlogPosts" 
-        WHERE title ILIKE $1 
-        OR author ILIKE $1 
-        ${orderBy}
-      `;
+      SELECT id, title, content, author, "createdAt"
+      FROM "BlogPosts" 
+      WHERE title ILIKE $1 
+      OR author ILIKE $1 
+      ${orderBy}
+    `;
+
       const searchResult = await pool.query(searchQuery, [
         `%${sanitizedQuery}%`,
       ]);

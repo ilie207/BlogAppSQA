@@ -259,10 +259,12 @@ textarea:focus {
 /* Edit and Delete Buttons */
 .edit_button {
   margin-left: -200px;
+  background-color: rgb(58, 182, 58);
 }
 
 .delete_button {
   margin-right: -200px;
+  background-color: rgb(202, 50, 50);
 }
 
 .button-container {
