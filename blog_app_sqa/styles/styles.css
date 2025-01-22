@@ -1,8 +1,25 @@
+/* Main Content Styles */
+main {
+  padding: 20px;
+}
+
+/*Header*/
 header {
+  background-color: #030304;
+  padding: 20px;
+  text-align: center;
+  max-height: 100vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.title_styling {
+  color: white;
+  text-decoration: none;
+  font-size: 25px;
 }
 
 .title_styling {
@@ -11,6 +28,7 @@ header {
   transform: translateX(-50%);
 }
 
+/*Sign out button*/
 .sign-out-wrapper {
   margin-left: auto;
 }
@@ -32,30 +50,22 @@ header {
   margin-right: 0.5em;
 }
 
+/**Body*/
 body {
+  background-color: #1c1b21;
+  color: white;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
-  color: #333;
 }
+
+/*Text*/
 h1 {
   margin-top: 0;
   text-align: center;
 }
-/* Header Styles */
-header {
-  background-color: #030304;
-  padding: 20px;
-  text-align: center;
-  max-height: 100vh;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
 
-body {
-  background-color: #1c1b21;
-}
-
+/*Login page*/
 .background {
   width: 430px;
   height: 520px;
@@ -127,11 +137,6 @@ body {
   background-color: rgba(255, 255, 255, 0.9);
 }
 
-.title_styling {
-  color: white;
-  text-decoration: none;
-  font-size: 25px;
-}
 /* Navigation Styles */
 nav {
   margin-bottom: 20px;
@@ -147,40 +152,7 @@ nav {
 .navbar li {
   margin-right: 10px;
 }
-.navbar a {
-  color: #fff;
-  text-decoration: none;
-  padding: 8px 15px;
-  border-radius: 3px;
-  background-color: #312e82;
-  transition: background-color 0.3s ease;
-}
-.navbar a:hover {
-  background-color: #ffeabf;
-  color: #ff8c00;
-}
-/* Main Content Styles */
-main {
-  padding: 20px;
-}
 
-/* Flash messages container */
-.flashes {
-  display: block;
-  width: 80%;
-  margin: auto auto 20px auto;
-  pointer-events: none;
-}
-/* Flash message */
-.flashes li {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 3px;
-  color: #300505;
-  background-color: #777;
-}
-/* List styling */
 .container-style {
   list-style: none;
   padding: 0;
@@ -190,6 +162,8 @@ main {
   margin: 10px auto;
   justify-content: center;
 }
+
+/*List elements*/
 li {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -206,29 +180,32 @@ li {
   border-radius: 15px;
   align-items: center;
 }
+
 li:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.post-meta {
-  flex-grow: 1;
 
-  margin-top: -20px;
-  font: italic 14px/1.4 Georgia, serif;
-  background-color: #f5f5f5;
-}
+/*Post content*/
 .post-content {
   flex-grow: 1;
   margin-bottom: 10px;
   white-space: pre-wrap;
 }
-/* Form Styles */
+
+p {
+  margin-bottom: 10px;
+}
+
+/* Form Element Styles */
 form {
   margin-bottom: 20px;
   padding: 20px;
   display: grid;
   grid-gap: 10px;
 }
+
+/*Create Post Page*/
 input[type="text"],
 input[type="password"],
 textarea {
@@ -253,12 +230,15 @@ textarea {
   height: 10em;
   resize: vertical;
 }
+
 input[type="text"]:focus,
 input[type="password"]:focus,
 textarea:focus {
   outline: none;
   border-color: #007bff;
 }
+
+/*Custom Button*/
 .custom_button {
   padding: 8px 20px;
   background-color: #007bff;
@@ -271,27 +251,12 @@ textarea:focus {
   text-align: center;
   max-width: 250px;
 }
+
 .custom_button:hover {
   background-color: #fd7e14;
 }
-/* Post Styles */
-p {
-  margin-bottom: 10px;
-}
-/* Edit Styles */
-.custom_button[type="submit"] {
-  background-color: #28a745;
-}
-.custom_button[type="submit"]:hover {
-  background-color: #218838;
-}
-.custom_button[type="submit"].danger {
-  background-color: #dc3545;
-}
-.custom_button[type="submit"].danger:hover {
-  background-color: #a13b45;
-}
 
+/* Edit and Delete Buttons */
 .edit_button {
   margin-left: -200px;
 }
@@ -310,8 +275,8 @@ p {
   color: white;
 }
 
+/* Adjust styles for smaller screens */
 @media (max-width: 768px) {
-  /* Adjust styles for smaller screens */
   body {
     font-size: 14px;
   }
@@ -324,6 +289,7 @@ p {
   align-items: center;
 }
 
+/*Search Component Styles*/
 .search-container {
   font-family: Arial, sans-serif;
   margin: 20px auto;
@@ -366,6 +332,7 @@ p {
   cursor: not-allowed;
 }
 
+/*Post Details Page*/
 .post-details {
   max-width: 800px;
   margin: 50px auto;
