@@ -14,22 +14,36 @@ export default function PostDetails() {
 
   useEffect(() => {
     if (id) {
-      fetch(`/api/postManagement?id=${id}`)
-        .then((res) => {
-          if (!res.ok) throw new Error("Failed to fetch post details");
-          return res.json();
-        })
-        .then((data) => {
+      const fetchPost = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch(
+            `/api/postManagement?id=${encodeURIComponent(id)}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              credentials: "include",
+            }
+          );
+
+          if (response.status === 400) {
+            setError("Invalid post ID format");
+            return;
+          }
+
+          const data = await response.json();
           setPost(data);
+        } catch (err) {
+          setError("Unable to load post content");
+        } finally {
           setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Error fetching post:", err);
-          setError(err.message);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
+        }
+      };
+
+      fetchPost();
     }
   }, [id]);
 

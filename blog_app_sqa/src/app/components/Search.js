@@ -12,18 +12,31 @@ export default function SearchComponent() {
   const handleSearch = async () => {
     setLoading(true);
     try {
+      const cleanQuery = searchQuery.trim();
       const response = await fetch(
         `/api/searchPosts?query=${encodeURIComponent(
-          searchQuery
-        )}&sort=${sortOption}`
+          cleanQuery
+        )}&sort=${sortOption}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+        }
       );
-      if (!response.ok) throw new Error("Error fetching posts");
+
+      if (response.status === 400) {
+        throw new Error("Invalid search parameters");
+      }
 
       const data = await response.json();
-      setSearchResults(data.searchResults);
-      setAllPosts(data.allPosts);
+      setSearchResults(data.searchResults || []);
+      setAllPosts(data.allPosts || []);
     } catch (error) {
-      console.error("Search error:", error);
+      setSearchResults([]);
+      setAllPosts([]);
     } finally {
       setLoading(false);
     }
@@ -61,18 +74,20 @@ export default function SearchComponent() {
           <h2>Search Results</h2>
           {searchResults.length > 0 ? (
             <ul key={uniqueKey} data-testid="search-results">
-              {searchResults.map((post) => (
-                <li key={post.id}>
-                  <Link href={`/posts/[id]?id=${post.id}`}>
-                    <h3>{post.title}</h3>
-                  </Link>
-
-                  <small>Author: {post.author}</small>
-                  <small>
-                    Created: {new Date(post.createdAt).toLocaleDateString()}
-                  </small>
-                </li>
-              ))}
+              {searchResults.map(
+                (post) =>
+                  post.id && (
+                    <li key={`search-${post.id}`}>
+                      <Link href={`/posts/${post.id}?id=${post.id}`}>
+                        <h3>{post.title}</h3>
+                      </Link>
+                      <small>Author: {post.author}</small>
+                      <small>
+                        Created: {new Date(post.createdAt).toLocaleDateString()}
+                      </small>
+                    </li>
+                  )
+              )}
             </ul>
           ) : (
             <p>No results found.</p>
@@ -84,11 +99,10 @@ export default function SearchComponent() {
           {allPosts.length > 0 ? (
             <ul key={uniqueKey} data-testid="all-posts">
               {allPosts.map((post) => (
-                <li key={post.id}>
-                  <Link href={`/posts/[id]?id=${post.id}`}>
+                <li key={`all-${post.id}`}>
+                  <Link href={`/posts/${post.id}?id=${post.id}`}>
                     <h3>{post.title}</h3>
                   </Link>
-
                   <small>Author: {post.author}</small>
                   <small>
                     Created: {new Date(post.createdAt).toLocaleDateString()}
