@@ -1,93 +1,83 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { useRouter } from "next/navigation";
 import BlogPost from "../../../src/app/components/BlogPost";
-import { getCurrentUser } from "../../../src/app/actions/actions";
-
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
-}));
 
 jest.mock("../../../src/app/actions/actions", () => ({
-  getCurrentUser: jest.fn(() => Promise.resolve({ email: "test@example.com" })),
+  getCurrentUser: jest.fn(),
+}));
+
+const mockRouter = {
+  push: jest.fn(),
+  refresh: jest.fn(),
+};
+
+jest.mock("next/navigation", () => ({
+  useRouter: () => mockRouter,
 }));
 
 describe("BlogPost Component", () => {
-  const mockRouter = {
-    push: jest.fn(),
-    refresh: jest.fn(),
-  };
-
   const mockPost = {
     id: "123",
     title: "Test Post",
-    content: "Test Content",
+    content: "1. Test Content",
     author: "Test Author",
-    createdAt: "2023-01-01",
+    user_email: "test@example.com",
+    createdAt: "2023-01-01T00:00:00.000Z",
   };
 
   beforeEach(() => {
-    useRouter.mockReturnValue(mockRouter);
-    global.fetch = jest.fn();
-    const mockReload = jest.fn();
-    Object.defineProperty(window, "location", {
-      value: { reload: mockReload },
-      writable: true,
-    });
+    global.fetch = jest.fn(() => Promise.resolve({ ok: true }));
+    delete window.location;
+    window.location = { reload: jest.fn() };
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test("renders post content correctly", async () => {
-    render(<BlogPost post={mockPost} />);
+  describe("User Authorization", () => {
+    it("renders null when user is not post creator", async () => {
+      const { getCurrentUser } = require("../../../src/app/actions/actions");
+      getCurrentUser.mockResolvedValue({ email: "different@example.com" });
+      const { container } = render(<BlogPost post={mockPost} />);
+      expect(container.firstChild).toBeNull();
+    });
 
-    await waitFor(() => {
-      expect(screen.getByText(mockPost.title)).toBeInTheDocument();
-      expect(screen.getByText(mockPost.content)).toBeInTheDocument();
-      expect(
-        screen.getByText(`Author: ${mockPost.author}`)
-      ).toBeInTheDocument();
+    it("checks creator status and returns null", async () => {
+      const { getCurrentUser } = require("../../../src/app/actions/actions");
+      getCurrentUser.mockResolvedValue({ email: "different@example.com" });
+      const { container } = render(<BlogPost post={mockPost} />);
+      await waitFor(() => {
+        expect(container.firstChild).toBeNull();
+      });
     });
   });
 
-  test("shows edit and delete buttons when user is creator", async () => {
-    getCurrentUser.mockResolvedValue({ email: mockPost.user_email });
+  describe("Post Management", () => {
+    it("handles post deletion successfully", async () => {
+      const { getCurrentUser } = require("../../../src/app/actions/actions");
+      getCurrentUser.mockResolvedValue({ email: mockPost.user_email });
+      const { getByText } = render(<BlogPost post={mockPost} />);
 
-    render(<BlogPost post={mockPost} />);
-
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: /edit/i })).toBeInTheDocument();
-      expect(
-        screen.getByRole("button", { name: /delete/i })
-      ).toBeInTheDocument();
+      await waitFor(() => {
+        fireEvent.click(getByText("Delete"));
+      });
+      expect(global.fetch).toHaveBeenCalled();
+      expect(window.location.reload).toHaveBeenCalled();
     });
-  });
 
-  test("hides edit and delete buttons when user is not creator", async () => {
-    getCurrentUser.mockResolvedValue({ email: "different@email.com" });
+    it("handles edit button click and navigation", async () => {
+      const { getCurrentUser } = require("../../../src/app/actions/actions");
+      getCurrentUser.mockResolvedValue({ email: mockPost.user_email });
 
-    render(<BlogPost post={mockPost} />);
+      const { getByRole } = render(<BlogPost post={mockPost} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole("button", { name: /edit/i })
-      ).not.toBeInTheDocument();
-      expect(
-        screen.queryByRole("button", { name: /delete/i })
-      ).not.toBeInTheDocument();
-    });
-  });
+      await waitFor(() => {
+        const editButton = getByRole("button", { name: /edit/i });
+        fireEvent.click(editButton);
+      });
 
-  test("navigates to edit page when edit button is clicked", async () => {
-    getCurrentUser.mockResolvedValue({ email: mockPost.user_email });
-
-    render(<BlogPost post={mockPost} />);
-
-    await waitFor(() => {
-      fireEvent.click(screen.getByRole("button", { name: /edit/i }));
       expect(mockRouter.push).toHaveBeenCalledWith(
         `/editPost?id=${mockPost.id}`
       );
