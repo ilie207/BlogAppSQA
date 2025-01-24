@@ -42,7 +42,7 @@ Within our SQA app we have developed the following features:
 
 - **Unit and integration testing** - To implement the unit and integration tests we had used jest testing tool. We had used this tool as it is compatible and easy to use with javascript framework like next.js. Jest also includes a test runner, mocking capabilities, this eliminates the need for multiple configurations and librarys. Jest is also well-suited for integration testing and provides excellent choice for testing how components and modules worked together. With the use of this tool we were able to thoroughly test the functionality of our app.
 - **Test coverage report**
-  ![screenshot](images/SQA_unit_test_coverage.png)
+  ![unit tests coverage](images/SQA_unit_test_coverage.png)
 
 ## Challenges and Solutions
 **1. Implementation of authentication feature:**
@@ -59,6 +59,11 @@ Within our SQA app we have developed the following features:
 
 ## Security Enhancements Evidence:
 - **Implemented security measures:** Within our project, we have implemented XSS for input sanitisation and CSP headers protection to restrict loading of certain resources. This has been configured inside our `middleware.js` file. To configure these we have used official documentation for [XSS](https://vercel.com/guides/understanding-xss-attacks) and [CSP](https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy) setup.
+  XSS Code Evidence:
+  ![XSS code](images/security-headers.png)
+  Input Sanitisation Code:
+  ![input sanitisation](images/sanitisation.png)
+  
 - In addition to XSS and CSP protection, we have also implemented CSRF protection by installing it and adding the required tokens to the necessary route.js files. tom implement it we have used the following [CSRF documentation](https://nextjs.org/blog/security-nextjs-server-components-actions).
 
 ## Code Quality and Refactoring Evidence:
@@ -67,7 +72,10 @@ Within our SQA app we have developed the following features:
 
 
 ## CI/CD and Git Practices Evidence:
-- Provide screenshots or logs from GitHub Actions to demonstrate CI/CD
-workflows.
-- Show evidence of collaboration through commit history, branching, and pull
-requests.
+- GitHub Actions Evidence:
+  ![github actions](images/github-actions.png)
+- Pull Request Evidence:
+  ![ilie commit](images/ilie-commit.png)
+  ![dilawar commit](images/dilawar-commit.png)
+- Commit History Evidence:
+  ![commits history](images/commits-history.png)
