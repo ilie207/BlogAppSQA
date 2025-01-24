@@ -8,13 +8,28 @@ Simple blog app created with next.js for SQA module assignment
 - Ilie Coroban- 50%
 
 ## Set up instructions
+**Pre-requisites:** 
+1. Create Free [Kinde](https://kinde.com/) account.
+2. Create free [Neon](https://neon.tech/?ref=dgys) account.
+3. Create a `env.local` file with following values: 
+- **#NEON**
+- **DATABASE_URL=**ADD_YOUR_NEON_DB_URL
 
-- git clone repository
-- cd blog_app_spa
-- npm install
-- npm run dev
+- **#KINDE AUTH**
+- **KINDE_CLIENT_ID=**ADD_YOUR_KINDE_ID
+- **KINDE_CLIENT_SECRET=**ADD_YOUR_KINDE_SECRET
+- **KINDE_ISSUER_URL=**ADD_YOUR_ISSUER_URL
+- **KINDE_SITE_URL=**http://localhost:3000
+- **KINDE_POST_LOGOUT_REDIRECT_URL=**http://localhost:3000
+- **KINDE_POST_LOGIN_REDIRECT_URL=**http://localhost:3000/dashboard
 
-## Features
+**Terminal commands:**
+1. `git clone` repository
+2. `cd blog_app_spa`
+3. `npm install`
+4. `npm run dev`
+
+## Features Implementation Evidence
 
 We have developed this app from scratch using create-next-app provided by the nextjs framework.
 Within our SQA app we have developed the following features:
@@ -23,13 +38,13 @@ Within our SQA app we have developed the following features:
 - **Access control** - We have implemented a fully functional access control feature, which allows the logged in users to edit, delete, and create blog posts. To achive this we have used the Kinde provided data, such as user email, with this we were able to verify the logged in user, and allow them to edit and delete blog posts only if those were created by them.
 - **Blog post management** - We have implemented a search component as well as route.js api file, which allows us to query the database with the user search data. We also implemented a sort functionality, this allows users to sort blog posts by latest and by alphabet.
 
-## Testing
+## Testing Evidence
 
 - **Unit and integration testing** - To implement the unit and integration tests we had used jest testing tool. We had used this tool as it is compatible and easy to use with javascript framework like next.js. Jest also includes a test runner, mocking capabilities, this eliminates the need for multiple configurations and librarys. Jest is also well-suited for integration testing and provides excellent choice for testing how components and modules worked together. With the use of this tool we were able to thoroughly test the functionality of our app.
 - **Test coverage report**
   ![screenshot](images/SQA_unit_test_coverage.png)
 
-## Challenging and Solutions
+## Challenges and Solutions
 **1. Implementation of authentication feature:**
 - **Challenge:** It was a challenge to implement the authentication feature using NextJs, as we had to ensure that everything is secure and working as intended.
 - **Sollution:** To overcome this challenge and implement the feature, we have watched available YouTube videos and read a tutorial on how to implement Kinde within NextJs. We have then used the Kinde 'Quick start' section to fully implement the authentication feature and ensure correct functionality.
@@ -38,6 +53,17 @@ Within our SQA app we have developed the following features:
 - **Challenge:** It was difficult to ensure a clean test coverage report and ensure that all edge cases are covered for complex components within our application. These complex components include CreatePost component and Search component.
 - **Solution:** We have used the brainstorming technique during a call, to identify all edge cases that should be tested for these components, based on the code we had. We have used Jest and React Testing Library, using mocking strategies to cover the extra cases for CreatePost and Search components. That way we were able to ensure 100% code coverage within all of our components provided by the coverage report.
 
-## Evidence
+## Security Enhancements Evidence:
+- **Implemented security measures:** Within our project, we have implemented XSS for input sanitisation and CSP headers protection to restrict loading of certain resources. This has been configured inside our `middleware.js` file. To configure these we have used official documentation for [XSS](https://vercel.com/guides/understanding-xss-attacks) and [CSP](https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy) setup.
+- In addition to XSS and CSP protection, we have also implemented CSRF protection by installing it and adding the required tokens to the necessary route.js files. tom implement it we have used the following [CSRF documentation](https://nextjs.org/blog/security-nextjs-server-components-actions).
 
-- SQA app feature implementation video:
+## Code Quality and Refactoring Evidence:
+- Reference sections of the codebase to demonstrate modularization and
+adherence to coding standards.
+- Highlight key improvements made during refactoring.
+
+## CI/CD and Git Practices Evidence:
+- Provide screenshots or logs from GitHub Actions to demonstrate CI/CD
+workflows.
+- Show evidence of collaboration through commit history, branching, and pull
+requests.
