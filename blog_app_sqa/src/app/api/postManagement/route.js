@@ -2,8 +2,18 @@ import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import validator from "validator";
+import { Tokens } from "csrf";
+
+const tokens = new Tokens();
 
 export async function DELETE(req) {
+  const csrfToken = req.headers.get("x-csrf-token");
+  const secret = process.env.CSRF_SECRET;
+
+  if (!csrfToken || !tokens.verify(secret, csrfToken)) {
+    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
+  }
+
   try {
     const { id } = await req.json();
     const { getUser } = getKindeServerSession();
@@ -30,6 +40,13 @@ export async function DELETE(req) {
 }
 
 export async function PUT(req) {
+  const csrfToken = req.headers.get("x-csrf-token");
+  const secret = process.env.CSRF_SECRET;
+
+  if (!csrfToken || !tokens.verify(secret, csrfToken)) {
+    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
+  }
+
   try {
     const { title, content, id } = await req.json();
     const { getUser } = getKindeServerSession();
@@ -90,7 +107,13 @@ export async function GET(req) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    return NextResponse.json(result.rows[0]);
+    const response = NextResponse.json(result.rows[0]);
+
+    const secret = process.env.CSRF_SECRET;
+    const token = tokens.create(secret);
+    response.headers.set("x-csrf-token", token);
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }

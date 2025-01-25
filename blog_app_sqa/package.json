@@ -12,6 +12,7 @@
   "dependencies": {
     "@kinde-oss/kinde-auth-nextjs": "^2.4.6",
     "@neondatabase/serverless": "^0.10.4",
+    "csrf": "^3.1.0",
     "mysql": "^2.18.1",
     "next": "15.1.0",
     "pg": "^8.13.1",
