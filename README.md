@@ -58,13 +58,13 @@ Within our SQA app we have developed the following features:
 - **Solution:** We have created an account with Neon, an online database. This allowed us to share one database for all posts, meaning that now all users could see other blog posts, and only the user that has created the blog posts would be able to edit and delete. 
 
 ## Security Enhancements Evidence:
-- **Implemented security measures:** Within our project, we have implemented XSS for input sanitisation and CSP headers protection to restrict loading of certain resources. This has been configured inside our `middleware.js` file. To configure these we have used official documentation for [XSS](https://vercel.com/guides/understanding-xss-attacks) and [CSP](https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy) setup.
-  XSS Code Evidence:
+- **Implemented security measures:** Within our project, we have implemented XSS for input sanitisation and CSP headers protection to restrict loading of certain resources. This has been configured inside our `middleware.js` file. To configure these we have used official documentation for [XSS](https://vercel.com/guides/understanding-xss-attacks) and [CSP](https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy) setup. We have used middleware.js file to enforce CSP headers, and protect against XSS attacks. The XSS protection is implemented through input sanitization, this helps to prevent against SQL injection attempts, XSS script injection, Malicious URL injections, and HTML tag manipulation. The implementation of CSP headers are configured in middleware.js to restrict loading of resources, which: controls which sources can load content, prevents unauthorized script execution, and manages resource loading permissions.
+- XSS Code Evidence.
   ![XSS code](images/security-headers.png)
-  Input Sanitisation Code:
+- Input Sanitisation Code:
   ![input sanitisation](images/sanitisation.png)
   
-- In addition to XSS and CSP protection, we have also implemented CSRF protection by installing it and adding the required tokens to the necessary route.js files. tom implement it we have used the following [CSRF documentation](https://nextjs.org/blog/security-nextjs-server-components-actions).
+- In addition to XSS and CSP protection, we have also implemented CSRF protection by installing it and adding the required tokens to the necessary route.js files. tom implement it we have used the following [CSRF documentation](https://nextjs.org/blog/security-nextjs-server-components-actions). The CSRF protection in BlogAppSQA is implemented using tokens to verify that requests originate from legitimate sources.
 
 ## Code Quality and Refactoring Evidence:
 1. **Refactored CSS file -** Once we were finalising the development of the application, we have reviewed the CSS file and checked for classNames that were no longer used, and removed them. In addition to that we have added comments to separate stylings by sections, this would make it easier for future additions to the CSS file. [Pull request evidence.](https://github.com/ilie207/BlogAppSQA/commit/6f4ccc7d8df68f11f9d9140f8850ad62230da545)  
