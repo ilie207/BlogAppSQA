@@ -12,16 +12,16 @@ Simple blog app created with next.js for SQA module assignment
 1. Create Free [Kinde](https://kinde.com/) account.
 2. Create free [Neon](https://neon.tech/?ref=dgys) account.
 3. Create a `env.local` file with following values: 
-- **#NEON**
-- **DATABASE_URL=**ADD_YOUR_NEON_DB_URL
+- **NEON**
+- **DATABASE_URL**=ADD_YOUR_NEON_DB_URL
 
-- **#KINDE AUTH**
-- **KINDE_CLIENT_ID=**ADD_YOUR_KINDE_ID
-- **KINDE_CLIENT_SECRET=**ADD_YOUR_KINDE_SECRET
-- **KINDE_ISSUER_URL=**ADD_YOUR_ISSUER_URL
-- **KINDE_SITE_URL=**http://localhost:3000
-- **KINDE_POST_LOGOUT_REDIRECT_URL=**http://localhost:3000
-- **KINDE_POST_LOGIN_REDIRECT_URL=**http://localhost:3000/dashboard
+- **KINDE AUTH**
+- **KINDE_CLIENT_ID**=ADD_YOUR_KINDE_ID
+- **KINDE_CLIENT_SECRET**=ADD_YOUR_KINDE_SECRET
+- **KINDE_ISSUER_URL**=ADD_YOUR_ISSUER_URL
+- **KINDE_SITE_URL**=http://localhost:3000
+- **KINDE_POST_LOGOUT_REDIRECT_URL**=http://localhost:3000
+- **KINDE_POST_LOGIN_REDIRECT_URL**=http://localhost:3000/dashboard
 
 **Terminal commands:**
 1. `git clone` repository
