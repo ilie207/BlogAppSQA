@@ -47,14 +47,14 @@ Within our SQA app we have developed the following features:
 ## Challenges and Solutions
 **1. Implementation of authentication feature:**
 - **Challenge:** It was a challenge to implement the authentication feature using NextJs, as we had to ensure that everything is secure and working as intended.
-- **Sollution:** To overcome this challenge and implement the feature, we have watched available YouTube videos and read a tutorial on how to implement Kinde within NextJs. We have then used the Kinde 'Quick start' section to fully implement the authentication feature and ensure correct functionality.
+- **Solution:** To overcome this challenge and implement the feature, we have watched available YouTube videos and read a tutorial on how to implement Kinde within NextJs. We have then used the Kinde 'Quick start' section to fully implement the authentication feature and ensure correct functionality.
 
 **2. Testing complex components:**
 - **Challenge:** It was difficult to ensure a clean test coverage report and ensure that all edge cases are covered for complex components within our application. These complex components include CreatePost component and Search component.
 - **Solution:** We have used the brainstorming technique during a call, to identify all edge cases that should be tested for these components, based on the code we had. We have used Jest and React Testing Library, using mocking strategies to cover the extra cases for CreatePost and Search components. That way we were able to ensure 100% code coverage within all of our components provided by the coverage report.
 
 **3.Database setup:**
-- **Challenge:** It was diffcult to set up the database locally and trying to allow post management with the local database caused issues to edit and delete. In addition to that with the local database only the person creating the post would be able to see it. 
+- **Challenge:** It was difficult to set up the database locally and trying to allow post management with the local database caused issues to edit and delete posts. In addition to that with the local database only the person creating the post would be able to see it. 
 - **Solution:** We have created an account with Neon, an online database. This allowed us to share one database for all posts, meaning that now all users could see other blog posts, and only the user that has created the blog posts would be able to edit and delete. 
 
 ## Security Enhancements Evidence:
