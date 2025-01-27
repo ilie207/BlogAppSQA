@@ -25,7 +25,7 @@ export default function SearchComponent() {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            "csrf-token": csrfToken, // Make sure this matches what the backend expects
+            "csrf-token": csrfToken,
           },
           credentials: "include",
         }
