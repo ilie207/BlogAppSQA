@@ -71,29 +71,3 @@ describe("Input Sanitization Tests", () => {
     expect(validator.isURL(urls.dataUrl)).toBe(false);
   });
 });
-
-describe("CSRF Protection Tests", () => {
-  beforeAll(() => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        status: 403,
-        json: () => Promise.resolve({ error: "Invalid CSRF token" }),
-      })
-    );
-  });
-
-  test("CSRF Token Validation", async () => {
-    const response = await fetch("http://localhost:3000/api/searchPosts", {
-      method: "GET",
-      headers: {
-        "CSRF-Token": "invalid-token",
-      },
-    });
-    expect(response.status).toBe(403);
-  });
-
-  afterAll(() => {
-    global.fetch.mockClear();
-    delete global.fetch;
-  });
-});
