@@ -30,11 +30,13 @@ export default function EditPost() {
   }, [postId]);
 
   const handleSubmit = async (e) => {
+    const csrfToken = localStorage.getItem("editCsrfToken");
     e.preventDefault();
     const response = await fetch(`/api/postManagement`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
       },
       body: JSON.stringify({
         ...post,
@@ -43,6 +45,7 @@ export default function EditPost() {
     });
 
     if (response.ok) {
+      localStorage.removeItem("editCsrfToken");
       router.push("/myBlogPosts");
     }
   };

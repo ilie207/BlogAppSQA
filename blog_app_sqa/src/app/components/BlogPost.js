@@ -15,10 +15,14 @@ export default function BlogPost({ post }) {
   const isCreator = user?.email === post.user_email;
 
   const handleDelete = async () => {
+    const tokenResponse = await fetch("/api/csrf/token");
+    const { csrfToken } = await tokenResponse.json();
+
     const response = await fetch(`/api/postManagement`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
       },
       body: JSON.stringify({ id: post.id }),
     });
@@ -29,7 +33,11 @@ export default function BlogPost({ post }) {
     }
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
+    const tokenResponse = await fetch("/api/csrf/token");
+    const { csrfToken } = await tokenResponse.json();
+
+    localStorage.setItem("editCsrfToken", csrfToken);
     router.push(`/editPost?id=${post.id}`);
   };
 

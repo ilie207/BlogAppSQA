@@ -3,10 +3,15 @@ import pool from "../../../lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import validator from "validator";
 import Tokens from "csrf";
+import { verifyToken } from "../../../middleware/csrf";
 
 const tokens = new Tokens();
 
 export async function DELETE(req) {
+  const csrfToken = req.headers.get("X-CSRF-Token");
+  if (!verifyToken(csrfToken)) {
+    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
+  }
   try {
     const { id } = await req.json();
     const { getUser } = getKindeServerSession();
@@ -32,6 +37,10 @@ export async function DELETE(req) {
 }
 
 export async function PUT(req) {
+  const csrfToken = req.headers.get("X-CSRF-Token");
+  if (!verifyToken(csrfToken)) {
+    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
+  }
   try {
     const { title, content, id } = await req.json();
     const { getUser } = getKindeServerSession();
