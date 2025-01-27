@@ -64,7 +64,7 @@ Within our SQA app we have developed the following features:
 - Input Sanitisation Code:
   ![input sanitisation](images/sanitisation.png)
   
-- In addition to XSS and CSP protection, we have also implemented CSRF protection by installing it and adding the required tokens to the necessary route.js files. tom implement it we have used the following [CSRF documentation](https://nextjs.org/blog/security-nextjs-server-components-actions). The CSRF protection in BlogAppSQA is implemented using tokens to verify that requests originate from legitimate sources.
+- In addition to XSS and CSP protection, we have also implemented CSRF protection by installing it and adding the required tokens to the necessary route.js files. To implement it we have used the following [CSRF documentation](https://nextjs.org/blog/security-nextjs-server-components-actions). The CSRF protection in BlogAppSQA is implemented using tokens to verify that requests originate from legitimate sources.
 
 ## Code Quality and Refactoring Evidence:
 1. **Refactored CSS file -** Once we were finalising the development of the application, we have reviewed the CSS file and checked for classNames that were no longer used, and removed them. In addition to that we have added comments to separate stylings by sections, this would make it easier for future additions to the CSS file. [Pull request evidence.](https://github.com/ilie207/BlogAppSQA/commit/6f4ccc7d8df68f11f9d9140f8850ad62230da545)  
