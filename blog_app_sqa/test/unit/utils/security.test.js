@@ -1,4 +1,5 @@
 import validator from "validator";
+import fetch from "node-fetch";
 
 describe("Input Sanitization Tests", () => {
   const testInputs = {
@@ -68,5 +69,14 @@ describe("Input Sanitization Tests", () => {
     expect(validator.isURL(urls.safe)).toBe(true);
     expect(validator.isURL(urls.javascript)).toBe(false);
     expect(validator.isURL(urls.dataUrl)).toBe(false);
+  });
+  test("CSRF Token Validation", async () => {
+    const response = await fetch("http://localhost:3000/api/searchPosts", {
+      method: "GET",
+      headers: {
+        "CSRF-Token": "invalid-token",
+      },
+    });
+    expect(response.status).toBe(403);
   });
 });

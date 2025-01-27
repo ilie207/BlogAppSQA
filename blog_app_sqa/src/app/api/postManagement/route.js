@@ -2,24 +2,16 @@ import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import validator from "validator";
-import { Tokens } from "csrf";
+import Tokens from "csrf";
 
 const tokens = new Tokens();
 
 export async function DELETE(req) {
-  const csrfToken = req.headers.get("x-csrf-token");
-  const secret = process.env.CSRF_SECRET;
-
-  if (!csrfToken || !tokens.verify(secret, csrfToken)) {
-    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
-  }
-
   try {
     const { id } = await req.json();
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    // Validate id is numeric
     if (!validator.isNumeric(id.toString())) {
       return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
     }
@@ -40,19 +32,11 @@ export async function DELETE(req) {
 }
 
 export async function PUT(req) {
-  const csrfToken = req.headers.get("x-csrf-token");
-  const secret = process.env.CSRF_SECRET;
-
-  if (!csrfToken || !tokens.verify(secret, csrfToken)) {
-    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
-  }
-
   try {
     const { title, content, id } = await req.json();
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    // Validate inputs
     if (!validator.isLength(title, { min: 1, max: 255 })) {
       return NextResponse.json(
         { error: "Invalid title length" },
@@ -108,7 +92,6 @@ export async function GET(req) {
     }
 
     const response = NextResponse.json(result.rows[0]);
-
     const secret = process.env.CSRF_SECRET;
     const token = tokens.create(secret);
     response.headers.set("x-csrf-token", token);

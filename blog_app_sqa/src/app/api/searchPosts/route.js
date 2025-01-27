@@ -1,11 +1,18 @@
 import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import validator from "validator";
-import { Tokens } from "csrf";
+import Tokens from "csrf";
 
 const tokens = new Tokens();
 
 export async function GET(request) {
+  const csrfToken = request.headers.get("csrf-token");
+  const secret = process.env.CSRF_SECRET;
+
+  if (!csrfToken || !tokens.verify(secret, csrfToken)) {
+    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
+  }
+
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("query");
   const sort = searchParams.get("sort");
@@ -61,7 +68,6 @@ export async function GET(request) {
       allPosts,
     });
 
-    const secret = process.env.CSRF_SECRET;
     const token = tokens.create(secret);
     response.headers.set("x-csrf-token", token);
 
@@ -70,7 +76,6 @@ export async function GET(request) {
     return NextResponse.json({ error: "Search failed" }, { status: 500 });
   }
 }
-
 export async function POST(request) {
   const csrfToken = request.headers.get("x-csrf-token");
   const secret = process.env.CSRF_SECRET;
