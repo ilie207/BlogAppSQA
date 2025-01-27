@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import validator from "validator";
+import Tokens from "csrf";
+
+const tokens = new Tokens();
 
 export async function DELETE(req) {
   try {
@@ -9,7 +12,6 @@ export async function DELETE(req) {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    // Validate id is numeric
     if (!validator.isNumeric(id.toString())) {
       return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
     }
@@ -35,7 +37,6 @@ export async function PUT(req) {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    // Validate inputs
     if (!validator.isLength(title, { min: 1, max: 255 })) {
       return NextResponse.json(
         { error: "Invalid title length" },
@@ -90,7 +91,12 @@ export async function GET(req) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    return NextResponse.json(result.rows[0]);
+    const response = NextResponse.json(result.rows[0]);
+    const secret = process.env.CSRF_SECRET;
+    const token = tokens.create(secret);
+    response.headers.set("x-csrf-token", token);
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }

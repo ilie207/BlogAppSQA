@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function SearchComponent() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortOption, setSortOption] = useState("latest");
+  const [sortOption, setSortOption] = useState("date");
   const [searchResults, setSearchResults] = useState([]);
   const [allPosts, setAllPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,7 @@ export default function SearchComponent() {
           onChange={(e) => setSortOption(e.target.value)}
           className="sort-select"
         >
-          <option value="latest">Sort by Latest</option>
+          <option value="date">Sort by Latest</option>
           <option value="alphabet">Sort by Alphabet</option>
         </select>
         <button

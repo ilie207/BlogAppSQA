@@ -1,4 +1,5 @@
 import validator from "validator";
+import fetch from "node-fetch";
 
 describe("Input Sanitization Tests", () => {
   const testInputs = {
