@@ -43,22 +43,22 @@ Within our SQA app we have developed the following features:
   ![kinde api](images/kinde-auth1.png)
 
 - Kinde login page using Kinde button components:
-![kinde login page](images/kinde-auth2.png)
+  ![kinde login page](images/kinde-auth2.png)
 
 - **Access control** - We have implemented a fully functional access control feature, which allows the logged in users to edit, delete, and create blog posts. To achieve this we have used the Kinde provided data, such as user email, with this we were able to verify the logged in user, and allow them to edit and delete blog posts only if those were created by them.
 - Checking if the logged in user is the author of the blog post:
   ![access control](images/access-control1.png)
 
 - Display blog posts created by the logged in user:
-![access control](images/access-control2.png)
+  ![access control](images/access-control2.png)
 
 - **Blog post management** - We have implemented a search component as well as route.js api file, which allows us to query the database with the user search data. We also implemented a sort functionality, this allows users to sort blog posts by latest and by alphabet.
 - Search GET method query:
   ![search](images/search-query1.png)
-  ![search](images/search-query2.png)
+  ![search query 2](images/search-query2.png)
 
 - Handle Search function inside Search component:
-![search](images/handle-search.png)
+  ![search](images/handle-search.png)
 
 ## Testing Evidence
 
