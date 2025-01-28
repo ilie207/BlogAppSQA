@@ -48,10 +48,14 @@ function CreatePost() {
       user_email: user?.email,
     };
 
+    const tokenResponse = await fetch("/api/csrf/token");
+    const { csrfToken } = await tokenResponse.json();
+
     const response = await fetch("/api/allPosts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken,
       },
       body: JSON.stringify(sanitizedData),
     });

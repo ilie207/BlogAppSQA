@@ -157,13 +157,21 @@ describe("SearchComponent", () => {
   });
 
   test("handles 400 response status code", async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok: false,
-        status: 400,
-        json: () => Promise.resolve({}),
-      })
-    );
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ csrfToken: "test-token" }),
+        })
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: false,
+          status: 400,
+          json: () => Promise.resolve({}),
+        })
+      );
 
     render(<SearchComponent />);
 
@@ -175,16 +183,24 @@ describe("SearchComponent", () => {
       expect(screen.getByText(/No posts available./i)).toBeInTheDocument();
     });
 
-    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(2); // Updated to expect 2 calls
   });
 
   test("sets empty arrays when response does not contain data", async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({}),
-      })
-    );
+    global.fetch = jest
+      .fn()
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ csrfToken: "test-token" }),
+        })
+      )
+      .mockImplementationOnce(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        })
+      );
 
     render(<SearchComponent />);
 
@@ -192,10 +208,10 @@ describe("SearchComponent", () => {
     fireEvent.click(button);
 
     await waitFor(() => {
-      // Verify that search results and all posts are empty
       expect(screen.getByText(/No results found./i)).toBeInTheDocument();
       expect(screen.getByText(/No posts available./i)).toBeInTheDocument();
     });
-    expect(fetch).toHaveBeenCalledTimes(1);
+
+    expect(fetch).toHaveBeenCalledTimes(2); // Updated to expect 2 calls
   });
 });

@@ -2,8 +2,13 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import validator from "validator";
+import { verifyToken } from "../../../middleware/csrf";
 
 export async function POST(req) {
+  const csrfToken = req.headers.get("X-CSRF-Token");
+  if (!verifyToken(csrfToken)) {
+    return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });
+  }
   try {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
@@ -58,7 +63,6 @@ export async function POST(req) {
     );
   }
 }
-
 export async function GET() {
   try {
     const result = await pool.query(

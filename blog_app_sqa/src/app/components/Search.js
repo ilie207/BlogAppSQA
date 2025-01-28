@@ -12,6 +12,9 @@ export default function SearchComponent() {
   const handleSearch = async () => {
     setLoading(true);
     try {
+      const tokenResponse = await fetch("/api/csrf/token");
+      const { csrfToken } = await tokenResponse.json();
+
       const cleanQuery = searchQuery.trim();
       const response = await fetch(
         `/api/searchPosts?query=${encodeURIComponent(
@@ -22,6 +25,7 @@ export default function SearchComponent() {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            "csrf-token": csrfToken,
           },
           credentials: "include",
         }
