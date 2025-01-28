@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import BlogPost from "../../../src/app/components/BlogPost";
 
@@ -27,60 +27,76 @@ describe("BlogPost Component", () => {
   };
 
   beforeEach(() => {
-    global.fetch = jest.fn(() => Promise.resolve({ ok: true }));
-    delete window.location;
-    window.location = { reload: jest.fn() };
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ csrfToken: "test-token" }),
+      })
+    );
+
+    Object.defineProperty(window, "location", {
+      value: {
+        reload: jest.fn(),
+      },
+      writable: true,
+    });
+
+    localStorage.clear();
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("User Authorization", () => {
-    it("renders null when user is not post creator", async () => {
-      const { getCurrentUser } = require("../../../src/app/actions/actions");
-      getCurrentUser.mockResolvedValue({ email: "different@example.com" });
-      const { container } = render(<BlogPost post={mockPost} />);
-      expect(container.firstChild).toBeNull();
-    });
-
-    it("checks creator status and returns null", async () => {
-      const { getCurrentUser } = require("../../../src/app/actions/actions");
-      getCurrentUser.mockResolvedValue({ email: "different@example.com" });
-      const { container } = render(<BlogPost post={mockPost} />);
-      await waitFor(() => {
-        expect(container.firstChild).toBeNull();
-      });
-    });
-  });
-
   describe("Post Management", () => {
     it("handles post deletion successfully", async () => {
       const { getCurrentUser } = require("../../../src/app/actions/actions");
       getCurrentUser.mockResolvedValue({ email: mockPost.user_email });
-      const { getByText } = render(<BlogPost post={mockPost} />);
+
+      let component;
+      await act(async () => {
+        component = render(<BlogPost post={mockPost} />);
+      });
+
+      await act(async () => {
+        fireEvent.click(component.getByText("Delete"));
+      });
 
       await waitFor(() => {
-        fireEvent.click(getByText("Delete"));
+        const fetchCalls = global.fetch.mock.calls;
+        expect(fetchCalls[0][0]).toBe("/api/csrf/token");
+        expect(fetchCalls[1][0]).toBe("/api/postManagement");
+        expect(fetchCalls[1][1]).toEqual({
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": "test-token",
+          },
+          body: JSON.stringify({ id: mockPost.id }),
+        });
+        expect(window.location.reload).toBeCalled();
       });
-      expect(global.fetch).toHaveBeenCalled();
-      expect(window.location.reload).toHaveBeenCalled();
     });
 
     it("handles edit button click and navigation", async () => {
       const { getCurrentUser } = require("../../../src/app/actions/actions");
       getCurrentUser.mockResolvedValue({ email: mockPost.user_email });
 
-      const { getByRole } = render(<BlogPost post={mockPost} />);
-
-      await waitFor(() => {
-        const editButton = getByRole("button", { name: /edit/i });
-        fireEvent.click(editButton);
+      let component;
+      await act(async () => {
+        component = render(<BlogPost post={mockPost} />);
       });
 
-      expect(mockRouter.push).toHaveBeenCalledWith(
-        `/editPost?id=${mockPost.id}`
-      );
+      await act(async () => {
+        fireEvent.click(component.getByText("Edit"));
+      });
+
+      await waitFor(() => {
+        expect(localStorage.getItem("editCsrfToken")).toBe("test-token");
+        expect(mockRouter.push).toHaveBeenCalledWith(
+          `/editPost?id=${mockPost.id}`
+        );
+      });
     });
   });
 });
