@@ -20,7 +20,6 @@ const Header = () => {
         <div className="sign-out-wrapper">
           <LogoutLink className="sign-out">
             <span>Sign Out</span>
-            <i className="fa fa-sign-out"></i>
           </LogoutLink>
         </div>
       </header>
