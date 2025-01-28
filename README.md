@@ -53,7 +53,7 @@ Within our SQA app we have developed the following features:
 ![access control](images/access-control2.png)
 
 - **Blog post management** - We have implemented a search component as well as route.js api file, which allows us to query the database with the user search data. We also implemented a sort functionality, this allows users to sort blog posts by latest and by alphabet.
-- Search GET method queyr:
+- Search GET method query:
   ![search](images/search-query1.png)
   ![search](images/search-query2.png)
 
