@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useKindeAuth } from "@kinde-oss/kinde-auth-nextjs";
 import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 
@@ -9,7 +8,6 @@ export default function EditPost() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const postId = searchParams.get("id");
-  const { user } = useKindeAuth();
   const [post, setPost] = useState({
     title: "",
     content: "",
