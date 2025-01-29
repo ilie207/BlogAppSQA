@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import pool from "../../../lib/db";
 import validator from "validator";
 import { verifyToken } from "../../../middleware/csrf";
+import Tokens from "csrf";
+
+const tokens = new Tokens();
 
 export async function GET(request) {
   const csrfToken = request.headers.get("csrf-token");
@@ -69,7 +72,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   const csrfToken = request.headers.get("x-csrf-token");
-  const secret = process.env.CSRF_SECRET;
+  const secret = process.env.CSRF_SECRET || tokens.secretSync();
 
   if (!csrfToken || !tokens.verify(secret, csrfToken)) {
     return NextResponse.json({ error: "Invalid CSRF token" }, { status: 403 });

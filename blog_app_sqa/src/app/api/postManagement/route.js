@@ -101,7 +101,7 @@ export async function GET(req) {
     }
 
     const response = NextResponse.json(result.rows[0]);
-    const secret = process.env.CSRF_SECRET;
+    const secret = process.env.CSRF_SECRET || tokens.secretSync();
     const token = tokens.create(secret);
     response.headers.set("x-csrf-token", token);
 
