@@ -35,6 +35,8 @@ Simple blog app created with next.js for SQA module assignment
 
 ## Features Implementation Evidence
 
+- **Video recording:** [SQA Video Recording](https://drive.google.com/file/d/1TVWDKcoU1uULGgr2DrlqffkZ46svWiTr/view?usp=drive_link)
+
 We have developed this app from scratch using create-next-app provided by the nextjs framework.
 Within our SQA app we have developed the following features:
 
